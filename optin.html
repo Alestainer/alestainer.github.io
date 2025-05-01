@@ -3,15 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twilio Opt-In Proof</title>
+    <title>Opt-In Proof for Twilio Messaging</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .sample-form { border: 1px solid #ccc; padding: 20px; margin: 20px 0; }
+        .checkbox-container { margin: 15px 0; }
+        .consent-text { font-size: 0.9em; color: #555; }
+    </style>
 </head>
 <body>
-    <h1>Twilio Opt-In Proof</h1>
-    <p>This page serves as proof of consent (opt-in) collected for Twilio messaging.</p>
-    <p>You can link to this page in your Twilio account settings or provide it when requested.</p>
-    <p>Date of Opt-In: [Enter Date]</p>
-    <p>Customer Name: [Enter Name]</p>
-    <p>Phone Number: [Enter Phone Number]</p>
-    <p>Message Content: [Enter Message Content]</p>
+    <h1>Opt-In Proof for Twilio Messaging</h1>
+    
+    <p>This page demonstrates how our service collects explicit consent for SMS messaging that is:</p>
+    <ul>
+        <li>Separate from service registration</li>
+        <li>Completely optional (unchecked by default)</li>
+        <li>Clear about message content, frequency, and how to opt out</li>
+    </ul>
+
+    <h2>Sample Registration Form</h2>
+    <div class="sample-form">
+        <h3>Create Account</h3>
+        <form>
+            <div>
+                <label for="name">Full Name:</label><br>
+                <input type="text" id="name" name="name" value="John Doe">
+            </div>
+            <div>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" value="john@example.com">
+            </div>
+            <div>
+                <label for="phone">Phone Number:</label><br>
+                <input type="tel" id="phone" name="phone" value="+1234567890">
+            </div>
+            <div>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" value="********">
+            </div>
+            
+            <hr>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="consent" name="consent">
+                <label for="consent" class="consent-text">
+                    I consent to receive SMS notifications for purpose of account verification. 
+                    Message and data rates may apply. Messaging frequency varies. 
+                    Reply STOP to opt-out at any time. This consent is not required to use our service.
+                </label>
+            </div>
+            
+            <button type="button">Create Account</button>
+        </form>
+    </div>
+
+    <h2>Verification Process Documentation</h2>
+    <p>When users register for our service:</p>
+    <ol>
+        <li>Users complete the registration form above</li>
+        <li>The SMS consent checkbox is <strong>unchecked by default</strong></li>
+        <li>Users can complete registration regardless of whether they opt in to SMS</li>
+        <li>Opted-in users receive a confirmation message with opt-out instructions</li>
+        <li>All message templates include opt-out instructions</li>
+    </ol>
+
+    <h2>Sample Message Content</h2>
+    <p>Example verification message: "Your verification code is 123456. Reply STOP to opt out."</p>
 </body>
 </html>
