@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Anton Nikolaev',
+  url: 'https://alestainer.com',
+  jobTitle: 'AI Scientist & Engineer',
+  knowsAbout: [
+    'Agentic AI Systems',
+    'Incentive Design for AI',
+    'MLOps',
+    'AIOps',
+    'Computer Vision',
+    'Retrieval-Augmented Generation',
+    'Machine Learning',
+  ],
+  sameAs: [
+    // TODO: Add your social profile URLs
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Anton Nikolaev — AI Scientist & Engineer',
+  url: 'https://alestainer.com',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What are agentic AI systems?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Agentic AI systems are autonomous programs that can plan, reason, use tools, and take actions to accomplish complex goals. Unlike simple chatbots, they maintain state, break down tasks, and iteratively work toward objectives — making them ideal for workflow automation, research assistance, and decision support.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is RAG and why does it matter?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Retrieval-Augmented Generation (RAG) is an architecture that connects large language models to your private data — documents, databases, APIs — so they can provide accurate, grounded answers instead of hallucinating. RAG is essential for enterprise AI applications where factual accuracy is critical.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is MLOps and why do I need it?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'MLOps (Machine Learning Operations) brings DevOps practices to ML — automated training pipelines, model versioning, monitoring, and deployment. Without MLOps, models degrade silently in production. With it, you get reproducible, reliable AI systems that improve over time.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does an AI consulting engagement cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Engagements vary based on scope and complexity. A free initial consultation is offered to understand your needs and provide an estimate. Book a call to discuss your specific use case and budget.',
+      },
+    },
+  ],
+};
+
+const services = [
+  {
+    title: 'Agentic Systems',
+    description: 'Design and build autonomous AI agents that plan, reason, and execute complex workflows.',
+    icon: '&#x2699;',
+  },
+  {
+    title: 'MLOps & AIOps',
+    description: 'Production ML pipelines, monitoring, and automated operations for reliable AI at scale.',
+    icon: '&#x26A1;',
+  },
+  {
+    title: 'Computer Vision',
+    description: 'Custom vision models for detection, segmentation, and visual understanding.',
+    icon: '&#x1F441;',
+  },
+  {
+    title: 'RAG Systems',
+    description: 'Retrieval-augmented generation pipelines that ground LLMs in your domain knowledge.',
+    icon: '&#x1F4DA;',
+  },
+  {
+    title: 'Incentive Design for AI',
+    description: 'Alignment-aware reward and incentive structures for multi-agent systems.',
+    icon: '&#x1F3AF;',
+  },
+  {
+    title: 'AI Strategy & Consulting',
+    description: 'Technical guidance on adopting AI — from proof-of-concept to production deployment.',
+    icon: '&#x1F4C8;',
+  },
+];
+---
+
+<BaseLayout
+  title="Anton Nikolaev — AI Scientist & Engineer | Agentic Systems, MLOps, RAG"
+  description="AI Scientist & Engineer specializing in agentic systems, incentive design for AI, MLOps, AIOps, computer vision, and RAG. Book a free consultation."
+  schemas={[personSchema, websiteSchema, faqSchema]}
+>
+  <!-- Hero -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
+    <div class="max-w-3xl">
+      <p class="text-primary font-semibold mb-3">AI Scientist & Engineer</p>
+      <h1 class="text-4xl sm:text-5xl font-bold text-text leading-tight mb-6">
+        Building intelligent systems that <span class="text-primary">reason, act, and learn</span>
+      </h1>
+      <p class="text-lg text-text-muted leading-relaxed mb-8 max-w-2xl">
+        I design and build agentic AI systems, production ML pipelines, and retrieval-augmented architectures. From research to deployment — I help teams ship AI that works.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a
+          href="/book"
+          class="inline-flex items-center justify-center bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors"
+        >
+          Book a Free Call
+        </a>
+        <a
+          href="/services"
+          class="inline-flex items-center justify-center border border-border text-text px-6 py-3 rounded-lg font-medium hover:bg-surface transition-colors"
+        >
+          View Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Do -->
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-text mb-4">What I Do</h2>
+      <p class="text-text-muted mb-10 max-w-2xl">
+        I work across the full AI stack — from research and prototyping to production deployment and operations.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service) => (
+          <a href="/services" class="group bg-white rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
+            <div class="text-2xl mb-3" set:html={service.icon} />
+            <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+            <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section (AIEO optimized) -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <h2 class="text-3xl font-bold text-text mb-10">Frequently Asked Questions</h2>
+    <div class="space-y-6 max-w-3xl">
+      <div>
+        <h3 class="font-semibold text-text mb-2">What are agentic AI systems?</h3>
+        <p class="text-text-muted leading-relaxed">
+          Agentic AI systems are autonomous programs that can plan, reason, use tools, and take actions to accomplish complex goals. Unlike simple chatbots, they maintain state, break down tasks, and iteratively work toward objectives — making them ideal for workflow automation, research assistance, and decision support.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-text mb-2">What is RAG and why does it matter?</h3>
+        <p class="text-text-muted leading-relaxed">
+          Retrieval-Augmented Generation (RAG) is an architecture that connects large language models to your private data — documents, databases, APIs — so they can provide accurate, grounded answers instead of hallucinating. RAG is essential for enterprise AI applications where factual accuracy is critical.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-text mb-2">What is MLOps and why do I need it?</h3>
+        <p class="text-text-muted leading-relaxed">
+          MLOps (Machine Learning Operations) brings DevOps practices to ML — automated training pipelines, model versioning, monitoring, and deployment. Without MLOps, models degrade silently in production. With it, you get reproducible, reliable AI systems that improve over time.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-text mb-2">How much does an AI consulting engagement cost?</h3>
+        <p class="text-text-muted leading-relaxed">
+          Engagements vary based on scope and complexity. I offer a free initial consultation to understand your needs and provide an estimate. <a href="/book" class="text-primary hover:underline">Book a call</a> to discuss your specific use case and budget.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-text mb-2">How do I book a consultation?</h3>
+        <p class="text-text-muted leading-relaxed">
+          You can <a href="/book" class="text-primary hover:underline">book a free call</a> directly on this website. Choose a time that works for you and I'll reach out with a video call link.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-3xl font-bold text-text mb-4">Ready to build something intelligent?</h2>
+      <p class="text-text-muted mb-8 max-w-xl mx-auto">
+        Let's discuss your AI challenge. Book a free 30-minute consultation — no strings attached.
+      </p>
+      <a
+        href="/book"
+        class="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors"
+      >
+        Book a Free Call
+      </a>
+    </div>
+  </section>
+</BaseLayout>

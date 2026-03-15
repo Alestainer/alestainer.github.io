@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  provider: {
+    '@type': 'Person',
+    name: 'Anton Nikolaev',
+    url: 'https://alestainer.com',
+  },
+  serviceType: 'AI & Machine Learning Consulting',
+  areaServed: 'Worldwide',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'AI Engineering Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Agentic Systems Design & Development',
+          description: 'Design and build autonomous AI agents for complex workflow automation.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'MLOps & AIOps',
+          description: 'Production ML pipelines, monitoring, and automated operations.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'RAG System Development',
+          description: 'Retrieval-augmented generation pipelines for domain-specific AI.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Computer Vision Solutions',
+          description: 'Custom vision models for detection, segmentation, and visual understanding.',
+        },
+      },
+    ],
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://alestainer.com/services' },
+  ],
+};
+
+const services = [
+  {
+    title: 'Agentic Systems Design & Development',
+    description: 'I design and build autonomous AI agents that plan, reason, use tools, and execute multi-step workflows. Whether you need an internal copilot, an automated research assistant, or a customer-facing agent — I architect systems that are reliable, observable, and aligned with your goals.',
+    capabilities: [
+      'Multi-agent orchestration and coordination',
+      'Tool use and API integration',
+      'Planning and reasoning architectures',
+      'Human-in-the-loop workflows',
+      'Agent evaluation and testing frameworks',
+    ],
+  },
+  {
+    title: 'Incentive Design for AI',
+    description: 'Building multi-agent systems that actually cooperate requires careful incentive engineering. I design reward structures, feedback loops, and alignment mechanisms that make AI agents work toward your objectives — not against them.',
+    capabilities: [
+      'Reward modeling and shaping',
+      'Multi-agent incentive alignment',
+      'RLHF and preference optimization',
+      'Evaluation metrics and guardrails',
+      'Game-theoretic mechanism design',
+    ],
+  },
+  {
+    title: 'MLOps & AIOps',
+    description: 'ML models are only valuable when they run reliably in production. I build the infrastructure to train, deploy, monitor, and iterate on models at scale — with full reproducibility and observability.',
+    capabilities: [
+      'CI/CD for ML pipelines',
+      'Model versioning and registry',
+      'Automated retraining and drift detection',
+      'Infrastructure as code for ML',
+      'Cost optimization and scaling',
+    ],
+  },
+  {
+    title: 'RAG System Development',
+    description: 'I build retrieval-augmented generation systems that ground LLMs in your domain data — documents, knowledge bases, databases, and APIs. The result: accurate, sourced answers your teams and customers can trust.',
+    capabilities: [
+      'Document ingestion and chunking strategies',
+      'Embedding model selection and fine-tuning',
+      'Vector store architecture and optimization',
+      'Hybrid search (semantic + keyword)',
+      'Evaluation and quality assurance pipelines',
+    ],
+  },
+  {
+    title: 'Computer Vision',
+    description: 'From object detection to visual inspection, I build custom vision models tailored to your specific use case. I handle the full lifecycle: data collection strategy, annotation, model training, optimization, and edge deployment.',
+    capabilities: [
+      'Object detection and instance segmentation',
+      'Image classification and visual search',
+      'Video analysis and tracking',
+      'Edge deployment and optimization',
+      'Synthetic data generation',
+    ],
+  },
+  {
+    title: 'AI Strategy & Technical Consulting',
+    description: 'Not sure where to start? I help teams evaluate AI opportunities, choose the right approach, and build a roadmap from proof-of-concept to production. No hype — just pragmatic technical guidance.',
+    capabilities: [
+      'AI readiness assessment',
+      'Technology and vendor evaluation',
+      'Architecture design and review',
+      'Team capability building',
+      'Proof-of-concept development',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="AI Engineering Services — Agentic Systems, MLOps, RAG | Anton Nikolaev"
+  description="Expert AI engineering services: agentic systems, MLOps, RAG pipelines, computer vision, and AI strategy consulting. Book a free consultation."
+  schemas={[serviceSchema, breadcrumbSchema]}
+>
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
+    <nav class="text-sm text-text-muted mb-8">
+      <a href="/" class="hover:text-primary transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-text">Services</span>
+    </nav>
+
+    <h1 class="text-4xl sm:text-5xl font-bold text-text mb-6">
+      AI Engineering Services
+    </h1>
+    <p class="text-lg text-text-muted leading-relaxed max-w-2xl mb-16">
+      I help teams build, deploy, and operate AI systems — from early-stage prototypes to production-grade infrastructure. Every engagement starts with understanding your problem.
+    </p>
+
+    <div class="space-y-12">
+      {services.map((service) => (
+        <div class="bg-surface rounded-xl p-6 sm:p-8 border border-border">
+          <h2 class="text-2xl font-bold text-text mb-3">{service.title}</h2>
+          <p class="text-text-muted leading-relaxed mb-5">{service.description}</p>
+          <ul class="space-y-2">
+            {service.capabilities.map((cap) => (
+              <li class="flex items-start gap-2 text-sm text-text-muted">
+                <span class="text-primary mt-0.5 shrink-0">&#x2713;</span>
+                {cap}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 text-center">
+    <h2 class="text-3xl font-bold text-text mb-4">Let's discuss your project</h2>
+    <p class="text-text-muted mb-8 max-w-xl mx-auto">
+      Book a free 30-minute consultation. I'll listen to your challenge and share honest feedback on whether and how AI can help.
+    </p>
+    <a
+      href="/book"
+      class="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors"
+    >
+      Book a Free Call
+    </a>
+  </section>
+</BaseLayout>

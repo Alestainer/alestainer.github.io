@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.com' },
+    { '@type': 'ListItem', position: 2, name: 'Book a Call', item: 'https://alestainer.com/book' },
+  ],
+};
+---
+
+<BaseLayout
+  title="Book a Free AI Consultation — Anton Nikolaev"
+  description="Schedule a free 30-minute consultation to discuss your AI project. Agentic systems, MLOps, RAG, computer vision, and more."
+  schemas={[breadcrumbSchema]}
+>
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
+    <nav class="text-sm text-text-muted mb-8">
+      <a href="/" class="hover:text-primary transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-text">Book a Call</span>
+    </nav>
+
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold text-text mb-6">
+        Book a Free Consultation
+      </h1>
+      <p class="text-lg text-text-muted leading-relaxed">
+        Pick a time that works for you. I'll listen to your AI challenge, share honest feedback, and suggest next steps — no pressure, no sales pitch.
+      </p>
+    </div>
+
+    <!-- Cal.com Embed -->
+    <!-- TODO: Replace "YOUR_CAL_USERNAME" with your actual Cal.com username -->
+    <!-- Sign up for free at https://cal.com -->
+    <div class="max-w-3xl mx-auto bg-surface rounded-xl border border-border p-4 min-h-[600px]">
+      <div id="cal-embed" class="w-full">
+        <p class="text-center text-text-muted py-20">
+          Loading calendar...
+        </p>
+      </div>
+    </div>
+
+    <!-- Fallback: Direct link if embed doesn't load -->
+    <div class="text-center mt-6">
+      <p class="text-sm text-text-muted">
+        Calendar not loading?
+        <!-- TODO: Replace with your Cal.com link -->
+        <a href="https://cal.com/YOUR_CAL_USERNAME" class="text-primary hover:underline" target="_blank" rel="noopener">
+          Open scheduling page directly
+        </a>
+      </p>
+    </div>
+
+    <!-- What to expect -->
+    <div class="max-w-3xl mx-auto mt-16">
+      <h2 class="text-2xl font-bold text-text mb-6">What to Expect</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-surface rounded-xl p-5 border border-border">
+          <div class="text-primary font-bold text-lg mb-2">1</div>
+          <h3 class="font-semibold text-text mb-1">Describe Your Challenge</h3>
+          <p class="text-sm text-text-muted">Tell me about your project, goals, and current roadblocks.</p>
+        </div>
+        <div class="bg-surface rounded-xl p-5 border border-border">
+          <div class="text-primary font-bold text-lg mb-2">2</div>
+          <h3 class="font-semibold text-text mb-1">Get Honest Feedback</h3>
+          <p class="text-sm text-text-muted">I'll share what's feasible, what's not, and where AI can genuinely help.</p>
+        </div>
+        <div class="bg-surface rounded-xl p-5 border border-border">
+          <div class="text-primary font-bold text-lg mb-2">3</div>
+          <h3 class="font-semibold text-text mb-1">Clear Next Steps</h3>
+          <p class="text-sm text-text-muted">Walk away with a concrete plan — whether we work together or not.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<!-- Cal.com embed script -->
+<!-- TODO: Replace "YOUR_CAL_USERNAME" with your Cal.com username -->
+<script is:inline>
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal;
+      let ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement("script")).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  // TODO: Replace "YOUR_CAL_USERNAME/30min" with your actual event slug
+  Cal("init", { origin: "https://cal.com" });
+  Cal("inline", {
+    elementOrSelector: "#cal-embed",
+    calLink: "YOUR_CAL_USERNAME/30min",
+    layout: "month_view",
+  });
+  Cal("ui", {
+    styles: { branding: { brandColor: "#2563eb" } },
+    hideEventTypeDetails: false,
+    layout: "month_view",
+  });
+</script>

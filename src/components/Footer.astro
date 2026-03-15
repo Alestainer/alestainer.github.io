@@ -1,0 +1,39 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-surface border-t border-border mt-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-bold text-text mb-3">Anton Nikolaev</h3>
+        <p class="text-sm text-text-muted leading-relaxed">
+          AI Scientist & Engineer specializing in agentic systems, MLOps, and applied machine learning.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-text mb-3">Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/services" class="text-text-muted hover:text-primary transition-colors">Services</a></li>
+          <li><a href="/blog" class="text-text-muted hover:text-primary transition-colors">Blog</a></li>
+          <li><a href="/book" class="text-text-muted hover:text-primary transition-colors">Book a Call</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-text mb-3">Connect</h3>
+        <ul class="space-y-2 text-sm">
+          <!-- TODO: Add your actual social links -->
+          <li><a href="https://github.com/" class="text-text-muted hover:text-primary transition-colors" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/" class="text-text-muted hover:text-primary transition-colors" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://twitter.com/" class="text-text-muted hover:text-primary transition-colors" target="_blank" rel="noopener">X / Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-border text-center text-sm text-text-muted">
+      &copy; {currentYear} Anton Nikolaev. All rights reserved.
+    </div>
+  </div>
+</footer>

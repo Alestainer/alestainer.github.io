@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alestainer.com/sitemap-index.xml
