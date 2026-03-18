@@ -5,8 +5,8 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Anton Nikolaev',
-  url: 'https://alestainer.com',
-  jobTitle: 'AI Scientist & Engineer',
+  url: 'https://alestainer.github.io',
+  jobTitle: 'Principal ML Scientist',
   knowsAbout: [
     'Agentic AI Systems',
     'Incentive Design for AI',
@@ -17,7 +17,8 @@ const personSchema = {
     'Machine Learning',
   ],
   sameAs: [
-    // TODO: Add your social profile URLs
+    'https://github.com/alestainer',
+    'https://www.linkedin.com/in/alestainer',
   ],
 };
 
@@ -25,7 +26,7 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Anton Nikolaev — AI Scientist & Engineer',
-  url: 'https://alestainer.com',
+  url: 'https://alestainer.github.io',
 };
 
 const faqSchema = {
@@ -71,50 +72,44 @@ const services = [
   {
     title: 'Agentic Systems',
     description: 'Design and build autonomous AI agents that plan, reason, and execute complex workflows.',
-    icon: '&#x2699;',
   },
   {
     title: 'MLOps & AIOps',
     description: 'Production ML pipelines, monitoring, and automated operations for reliable AI at scale.',
-    icon: '&#x26A1;',
   },
   {
     title: 'Computer Vision',
     description: 'Custom vision models for detection, segmentation, and visual understanding.',
-    icon: '&#x1F441;',
   },
   {
     title: 'RAG Systems',
     description: 'Retrieval-augmented generation pipelines that ground LLMs in your domain knowledge.',
-    icon: '&#x1F4DA;',
   },
   {
     title: 'Incentive Design for AI',
     description: 'Alignment-aware reward and incentive structures for multi-agent systems.',
-    icon: '&#x1F3AF;',
   },
   {
     title: 'AI Strategy & Consulting',
     description: 'Technical guidance on adopting AI — from proof-of-concept to production deployment.',
-    icon: '&#x1F4C8;',
   },
 ];
 ---
 
 <BaseLayout
-  title="Anton Nikolaev — AI Scientist & Engineer | Agentic Systems, MLOps, RAG"
-  description="AI Scientist & Engineer specializing in agentic systems, incentive design for AI, MLOps, AIOps, computer vision, and RAG. Book a free consultation."
+  title="Anton Nikolaev — Principal ML Scientist | Agentic Systems, MLOps, RAG"
+  description="Principal ML Scientist specializing in agentic systems, incentive design for AI, MLOps, AIOps, computer vision, and RAG. Book a free consultation."
   schemas={[personSchema, websiteSchema, faqSchema]}
 >
   <!-- Hero -->
   <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
     <div class="max-w-3xl">
-      <p class="text-primary font-semibold mb-3">AI Scientist & Engineer</p>
+      <p class="text-primary font-semibold mb-3">Principal ML Scientist</p>
       <h1 class="text-4xl sm:text-5xl font-bold text-text leading-tight mb-6">
-        Building intelligent systems that <span class="text-primary">reason, act, and learn</span>
+        I turn <span class="text-primary">research into deployed AI</span>
       </h1>
       <p class="text-lg text-text-muted leading-relaxed mb-8 max-w-2xl">
-        I design and build agentic AI systems, production ML pipelines, and retrieval-augmented architectures. From research to deployment — I help teams ship AI that works.
+        Computer scientist with a math and physics background. I've spent the last decade building ML systems — from search engines serving millions of users to agentic workflows for data analysis. I work across the full stack, from experiment design to production.
       </p>
       <div class="flex flex-col sm:flex-row gap-4">
         <a
@@ -143,7 +138,6 @@ const services = [
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
           <a href="/services" class="group bg-white rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
-            <div class="text-2xl mb-3" set:html={service.icon} />
             <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
             <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
           </a>
@@ -192,9 +186,9 @@ const services = [
   <!-- CTA -->
   <section class="bg-surface py-16 sm:py-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-3xl font-bold text-text mb-4">Ready to build something intelligent?</h2>
+      <h2 class="text-3xl font-bold text-text mb-4">Have a problem that needs ML?</h2>
       <p class="text-text-muted mb-8 max-w-xl mx-auto">
-        Let's discuss your AI challenge. Book a free 30-minute consultation — no strings attached.
+        Let's talk. 30 minutes, no pitch — just an honest conversation about whether AI can actually help.
       </p>
       <a
         href="/book"

@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.github.io' },
+    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://alestainer.github.io/about' },
+  ],
+};
+
+const experience = [
+  {
+    title: 'AI Consultant',
+    company: 'Hawaii AI Initiative',
+    location: 'Honolulu, HI',
+    period: 'Nov 2025 — Present',
+    bullets: [
+      'Implemented agentic workflow for large-scale data mining and analysis for a banking client.',
+      'Enabled automated insight generation for C-suite with data grounding.',
+    ],
+  },
+  {
+    title: 'AI Consultant',
+    company: 'C2C Contract',
+    location: 'Remote',
+    period: 'Nov 2024 — Present',
+    bullets: [
+      'Advised and executed AI strategy, architecture, and implementation across agriculture, cybersecurity, financial services, robotics, and entertainment.',
+      'Led end-to-end engagements: problem framing, model selection, system design, deployment.',
+    ],
+  },
+  {
+    title: 'Principal ML Researcher',
+    company: 'C2C Consulting Contract',
+    location: 'Remote',
+    period: 'Sep 2024 — Nov 2024',
+    bullets: [
+      'Designed and implemented a prediction-aggregation system that improved detection robustness and reduced manual intervention.',
+      'Provided architectural guidance to transition research concepts into deployable AI systems.',
+    ],
+  },
+  {
+    title: 'Senior Machine Learning Scientist',
+    company: 'Saks Fifth Avenue',
+    location: 'New York, NY',
+    period: 'May 2022 — Oct 2023',
+    bullets: [
+      'Led development and architecture of a search feature used by millions of customers per month. A/B testing showed 30% improvement in mobile search engagement.',
+      'Designed and implemented causal inference algorithms for customer experience and managerial decision-making.',
+      'Contributed to the Data Vault ingesting 6 TB of data per day.',
+    ],
+  },
+  {
+    title: 'Machine Learning Scientist',
+    company: 'Saks Fifth Avenue',
+    location: 'New York, NY',
+    period: 'Jun 2021 — May 2022',
+    bullets: [],
+  },
+  {
+    title: 'Data Science Fellow',
+    company: 'Hawaii Data Science Institute',
+    location: 'Honolulu, HI',
+    period: 'Aug 2019 — Aug 2020',
+    bullets: [
+      'Built a deep learning model that sped up cosmic radiation calculations by a factor of one million with under 3% relative error.',
+      'Created a climate model for sea surface temperature anomalies that matched or beat classical models trained on real data.',
+      'Built a computer vision system classifying 150 fish species and estimating fish size.',
+    ],
+  },
+  {
+    title: 'Machine Learning Engineer',
+    company: 'UHERO',
+    location: 'Honolulu, HI',
+    period: 'Jan 2018 — May 2019',
+    bullets: [
+      'Created a data science pipeline for housing market forecasting, processing 300,000 properties.',
+    ],
+  },
+  {
+    title: 'Junior ML Researcher',
+    company: 'Sberbank Technology',
+    location: 'Moscow, RU',
+    period: 'Oct 2015 — Jul 2016',
+    bullets: [
+      'Designed NLP system for service request handling across 5,000+ classes for the largest bank in Eastern Europe.',
+    ],
+  },
+];
+
+const education = [
+  {
+    degree: 'M.S. Computer Science',
+    school: 'University of Hawaii at Manoa',
+    period: '2019 — 2020',
+  },
+  {
+    degree: 'M.A. Economics',
+    school: 'University of Hawaii',
+    period: '2018',
+  },
+  {
+    degree: 'B.S. Computer Science',
+    school: 'Moscow Institute of Physics and Technology',
+    period: '2011 — 2015',
+  },
+];
+
+const publications = [
+  {
+    title: 'FishNet: Deep Neural Networks for Low-Cost Fish Stock Estimation',
+    venue: 'IEEE',
+    year: '2024',
+    url: 'https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10622134&isnumber=10622106',
+  },
+  {
+    title: 'Deep Learning for Climate Models of the Atlantic Ocean',
+    venue: 'CEUR Workshop Proceedings',
+    year: '2020',
+    url: 'http://ceur-ws.org/Vol-2587/article_3.pdf',
+  },
+  {
+    title: 'Impact of two of the world\'s largest protected areas on longline fishery catch rates',
+    venue: 'Nature Communications',
+    year: '2020',
+    url: 'https://www.nature.com/articles/s41467-020-14588-3',
+  },
+];
+---
+
+<BaseLayout
+  title="About — Anton Nikolaev"
+  description="Principal ML Scientist with a background in mathematics, physics, and economics. A decade of experience building ML systems from research to production."
+  schemas={[breadcrumbSchema]}
+>
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
+    <nav class="text-sm text-text-muted mb-8">
+      <a href="/" class="hover:text-primary transition-colors">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-text">About</span>
+    </nav>
+
+    <h1 class="text-4xl sm:text-5xl font-bold text-text mb-6">About</h1>
+    <div class="max-w-3xl text-lg text-text-muted leading-relaxed space-y-4 mb-16">
+      <p>
+        I'm a computer scientist with a background in mathematics, physics, and economics. I've spent the last decade working on machine learning — from NLP and computer vision to causal inference and agentic systems.
+      </p>
+      <p>
+        Most of my work has been at the intersection of research and engineering: figuring out what's possible, building it, and making sure it actually works in production. I've done this at Saks Fifth Avenue (search and causal inference at scale), at the University of Hawaii (climate modeling, cosmic radiation, fisheries), and now as an independent consultant across industries like banking, agriculture, cybersecurity, and robotics.
+      </p>
+      <p>
+        I studied computer science at MIPT in Moscow, then economics and CS at the University of Hawaii. I've published in Nature Communications and IEEE, and I've taught statistics and data analysis at the university level.
+      </p>
+    </div>
+
+    <!-- Experience -->
+    <h2 class="text-3xl font-bold text-text mb-8">Experience</h2>
+    <div class="space-y-8 mb-16">
+      {experience.map((job) => (
+        <div class="border-l-2 border-border pl-6">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+            <div>
+              <h3 class="font-semibold text-text">{job.title}</h3>
+              <p class="text-sm text-text-muted">{job.company} — {job.location}</p>
+            </div>
+            <p class="text-sm text-text-muted shrink-0">{job.period}</p>
+          </div>
+          {job.bullets.length > 0 && (
+            <ul class="space-y-1 mt-2">
+              {job.bullets.map((bullet) => (
+                <li class="text-sm text-text-muted leading-relaxed">{bullet}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Education -->
+    <h2 class="text-3xl font-bold text-text mb-8">Education</h2>
+    <div class="space-y-4 mb-16">
+      {education.map((edu) => (
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 border-l-2 border-border pl-6">
+          <div>
+            <h3 class="font-semibold text-text">{edu.degree}</h3>
+            <p class="text-sm text-text-muted">{edu.school}</p>
+          </div>
+          <p class="text-sm text-text-muted shrink-0">{edu.period}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Publications -->
+    <h2 class="text-3xl font-bold text-text mb-8">Publications</h2>
+    <div class="space-y-4 mb-16">
+      {publications.map((pub) => (
+        <div class="border-l-2 border-border pl-6">
+          <a href={pub.url} target="_blank" rel="noopener" class="font-semibold text-text hover:text-primary transition-colors">
+            {pub.title}
+          </a>
+          <p class="text-sm text-text-muted">{pub.venue}, {pub.year}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Links -->
+    <h2 class="text-3xl font-bold text-text mb-8">Links</h2>
+    <ul class="space-y-2 text-text-muted">
+      <li><a href="https://github.com/alestainer" target="_blank" rel="noopener" class="hover:text-primary transition-colors">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/alestainer" target="_blank" rel="noopener" class="hover:text-primary transition-colors">LinkedIn</a></li>
+      <li><a href="mailto:nikolaev@hawaii.edu" class="hover:text-primary transition-colors">nikolaev@hawaii.edu</a></li>
+    </ul>
+  </section>
+</BaseLayout>

@@ -5,8 +5,8 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.com' },
-    { '@type': 'ListItem', position: 2, name: 'Book a Call', item: 'https://alestainer.com/book' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.github.io' },
+    { '@type': 'ListItem', position: 2, name: 'Book a Call', item: 'https://alestainer.github.io/book' },
   ],
 };
 ---
@@ -33,8 +33,6 @@ const breadcrumbSchema = {
     </div>
 
     <!-- Cal.com Embed -->
-    <!-- TODO: Replace "YOUR_CAL_USERNAME" with your actual Cal.com username -->
-    <!-- Sign up for free at https://cal.com -->
     <div class="max-w-3xl mx-auto bg-surface rounded-xl border border-border p-4 min-h-[600px]">
       <div id="cal-embed" class="w-full">
         <p class="text-center text-text-muted py-20">
@@ -47,8 +45,7 @@ const breadcrumbSchema = {
     <div class="text-center mt-6">
       <p class="text-sm text-text-muted">
         Calendar not loading?
-        <!-- TODO: Replace with your Cal.com link -->
-        <a href="https://cal.com/YOUR_CAL_USERNAME" class="text-primary hover:underline" target="_blank" rel="noopener">
+<a href="https://cal.com/alestainer" class="text-primary hover:underline" target="_blank" rel="noopener">
           Open scheduling page directly
         </a>
       </p>
@@ -79,7 +76,6 @@ const breadcrumbSchema = {
 </BaseLayout>
 
 <!-- Cal.com embed script -->
-<!-- TODO: Replace "YOUR_CAL_USERNAME" with your Cal.com username -->
 <script is:inline>
   (function (C, A, L) {
     let p = function (a, ar) { a.q.push(ar); };
@@ -104,11 +100,10 @@ const breadcrumbSchema = {
     };
   })(window, "https://app.cal.com/embed/embed.js", "init");
 
-  // TODO: Replace "YOUR_CAL_USERNAME/30min" with your actual event slug
   Cal("init", { origin: "https://cal.com" });
   Cal("inline", {
     elementOrSelector: "#cal-embed",
-    calLink: "YOUR_CAL_USERNAME/30min",
+    calLink: "alestainer/30min",
     layout: "month_view",
   });
   Cal("ui", {
