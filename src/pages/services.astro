@@ -20,7 +20,15 @@ const serviceSchema = {
         itemOffered: {
           '@type': 'Service',
           name: 'Agentic Systems Design & Development',
-          description: 'Design and build autonomous AI agents for complex workflow automation.',
+          description: 'Design and build LLM-powered autonomous AI agents for complex workflow automation.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'AI Product Development',
+          description: 'LLM-powered products end-to-end: architecture, development, deployment, ready for real users.',
         },
       },
       {
@@ -28,23 +36,31 @@ const serviceSchema = {
         itemOffered: {
           '@type': 'Service',
           name: 'MLOps & AIOps',
-          description: 'Production ML pipelines, monitoring, and automated operations.',
+          description: 'Production ML and LLMOps pipelines, model fine-tuning, monitoring, and inference optimization.',
         },
       },
       {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'RAG System Development',
-          description: 'Retrieval-augmented generation pipelines for domain-specific AI.',
+          name: 'Search & Retrieval Systems',
+          description: 'Production search engines, RAG pipelines, vector databases, and NLP-powered retrieval.',
         },
       },
       {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Computer Vision Solutions',
-          description: 'Custom vision models for detection, segmentation, and visual understanding.',
+          name: 'Computer Vision',
+          description: 'Custom deep learning vision models for detection, segmentation, and visual understanding.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'AI Strategy & Technical Consulting',
+          description: 'Senior-level GenAI strategy, AI governance, LLM evaluation, and enterprise AI transformation.',
         },
       },
     ],
@@ -63,76 +79,80 @@ const breadcrumbSchema = {
 const services = [
   {
     title: 'Agentic Systems Design & Development',
-    description: 'I design and build autonomous AI agents that plan, reason, use tools, and execute multi-step workflows. Whether you need an internal copilot, an automated research assistant, or a customer-facing agent — I architect systems that are reliable, observable, and aligned with your goals.',
+    description: 'I build LLM-powered agents that plan, reason, use tools, and execute multi-step workflows. Internal tools, research assistants, customer-facing agents. Reliable and observable.',
     capabilities: [
       'Multi-agent orchestration and coordination',
-      'Tool use and API integration',
-      'Planning and reasoning architectures',
-      'Human-in-the-loop workflows',
-      'Agent evaluation and testing frameworks',
+      'LLM tool use and API integration',
+      'Planning and reasoning architectures (ReAct, chain-of-thought)',
+      'Human-in-the-loop workflows and prompt engineering',
+      'Agent evaluation, testing, and AgentOps',
+      'Game-theoretic incentive alignment',
+      'Reward modeling and evaluation guardrails',
     ],
   },
   {
-    title: 'Incentive Design for AI',
-    description: 'Building multi-agent systems that actually cooperate requires careful incentive engineering. I design reward structures, feedback loops, and alignment mechanisms that make AI agents work toward your objectives — not against them.',
+    title: 'AI Product Development',
+    description: 'LLM-powered products end-to-end: architecture, backend, frontend, deployment. I ship the whole thing, ready for users.',
     capabilities: [
-      'Reward modeling and shaping',
-      'Multi-agent incentive alignment',
-      'RLHF and preference optimization',
-      'Evaluation metrics and guardrails',
-      'Game-theoretic mechanism design',
+      'End-to-end GenAI product architecture',
+      'Rapid prototyping and MVP development',
+      'LLM integration and prompt engineering',
+      'API design, NLP pipelines, and third-party integrations',
+      'Production deployment and scaling',
     ],
   },
   {
     title: 'MLOps & AIOps',
-    description: 'ML models are only valuable when they run reliably in production. I build the infrastructure to train, deploy, monitor, and iterate on models at scale — with full reproducibility and observability.',
+    description: 'Infrastructure to train, fine-tune, deploy, and monitor ML models and LLMs at scale. Reproducibility and observability included.',
     capabilities: [
-      'CI/CD for ML pipelines',
-      'Model versioning and registry',
+      'CI/CD for ML and LLMOps pipelines',
+      'Model fine-tuning, versioning, and registry',
       'Automated retraining and drift detection',
+      'Inference optimization and GPU cost management',
       'Infrastructure as code for ML',
-      'Cost optimization and scaling',
     ],
   },
   {
-    title: 'RAG System Development',
-    description: 'I build retrieval-augmented generation systems that ground LLMs in your domain data — documents, knowledge bases, databases, and APIs. The result: accurate, sourced answers your teams and customers can trust.',
+    title: 'Search & Retrieval Systems',
+    description: 'Production search engines serving millions of users, and RAG (Retrieval-Augmented Generation) pipelines that ground LLMs in your data. I\'ve done both.',
     capabilities: [
-      'Document ingestion and chunking strategies',
-      'Embedding model selection and fine-tuning',
-      'Vector store architecture and optimization',
-      'Hybrid search (semantic + keyword)',
-      'Evaluation and quality assurance pipelines',
+      'Production search systems at scale',
+      'Search relevance tuning and A/B testing',
+      'RAG pipeline architecture and optimization',
+      'Vector database design and embedding model selection',
+      'Hybrid search (semantic + keyword) and reranking',
+      'NLP-powered document ingestion and chunking',
     ],
   },
   {
     title: 'Computer Vision',
-    description: 'From object detection to visual inspection, I build custom vision models tailored to your specific use case. I handle the full lifecycle: data collection strategy, annotation, model training, optimization, and edge deployment.',
+    description: 'Custom deep learning vision models for your specific use case. Full lifecycle: data strategy, annotation, training, optimization, edge deployment.',
     capabilities: [
       'Object detection and instance segmentation',
       'Image classification and visual search',
       'Video analysis and tracking',
-      'Edge deployment and optimization',
+      'Deep learning model optimization and edge deployment',
       'Synthetic data generation',
     ],
   },
   {
     title: 'AI Strategy & Technical Consulting',
-    description: 'Not sure where to start? I help teams evaluate AI opportunities, choose the right approach, and build a roadmap from proof-of-concept to production. No hype — just pragmatic technical guidance.',
+    description: 'GenAI strategy, vendor evaluation, architecture review, governance. A decade of shipping ML systems across industries.',
     capabilities: [
-      'AI readiness assessment',
-      'Technology and vendor evaluation',
-      'Architecture design and review',
-      'Team capability building',
-      'Proof-of-concept development',
+      'GenAI strategy and AI readiness assessment',
+      'LLM evaluation, vendor and model selection',
+      'Enterprise AI architecture design and review',
+      'AI governance and risk frameworks',
+      'Causal inference and experimentation design',
+      'Proof-of-concept development and team capability building',
     ],
   },
 ];
 ---
 
 <BaseLayout
-  title="AI Engineering Services — Agentic Systems, MLOps, RAG | Anton Nikolaev"
-  description="Expert AI engineering services: agentic systems, MLOps, RAG pipelines, computer vision, and AI strategy consulting. Book a free consultation."
+  title="AI Engineering Services — Agentic AI, LLM Development, MLOps, RAG | Anton Nikolaev"
+  description="Expert AI consulting: agentic systems, generative AI product development, LLM fine-tuning, MLOps, RAG pipelines, NLP, computer vision, and GenAI strategy. Book a free consultation."
   schemas={[serviceSchema, breadcrumbSchema]}
 >
   <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
@@ -146,7 +166,7 @@ const services = [
       AI Engineering Services
     </h1>
     <p class="text-lg text-text-muted leading-relaxed max-w-2xl mb-16">
-      I help teams build, deploy, and operate AI systems — from early-stage prototypes to production-grade infrastructure. Every engagement starts with understanding your problem.
+      I help teams build, deploy, and operate AI systems, from early-stage prototypes to production-grade infrastructure. Every engagement starts with understanding your problem.
     </p>
 
     <div class="space-y-12">
