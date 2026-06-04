@@ -15,6 +15,14 @@ export async function GET(context: APIContext) {
       description: post.data.description,
       pubDate: post.data.date,
       link: `/blog/${post.id}/`,
+      categories: post.data.tags,
+      ...(post.data.image && {
+        enclosure: {
+          url: new URL(post.data.image, context.site!).href,
+          type: 'image/jpeg',
+          length: 0,
+        },
+      }),
     })),
     customData: `<language>en-us</language>`,
   });
