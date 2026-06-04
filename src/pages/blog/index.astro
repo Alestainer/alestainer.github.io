@@ -35,20 +35,21 @@ const breadcrumbSchema = {
     {posts.length === 0 ? (
       <p class="text-text-muted">Posts coming soon.</p>
     ) : (
-      <div class="space-y-8">
+      <div class="h-feed space-y-8">
+        <data class="p-name hidden">Anton Nikolaev — AI Engineering Blog</data>
         {posts.map((post) => (
-          <a href={`/blog/${post.id}`} class="group block bg-surface rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
-            <time class="text-sm text-text-muted" datetime={post.data.date.toISOString()}>
+          <a href={`/blog/${post.id}`} class="h-entry group block bg-surface rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
+            <time class="text-sm text-text-muted dt-published" datetime={post.data.date.toISOString()}>
               {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>
-            <h2 class="text-xl font-bold text-text mt-2 mb-2 group-hover:text-primary transition-colors">
+            <h2 class="p-name text-xl font-bold text-text mt-2 mb-2 group-hover:text-primary transition-colors">
               {post.data.title}
             </h2>
-            <p class="text-text-muted leading-relaxed">{post.data.description}</p>
+            <p class="p-summary text-text-muted leading-relaxed">{post.data.description}</p>
             {post.data.tags.length > 0 && (
               <div class="flex flex-wrap gap-2 mt-3">
                 {post.data.tags.map((tag: string) => (
-                  <span class="text-xs bg-white border border-border rounded-full px-3 py-1 text-text-muted">{tag}</span>
+                  <span class="p-category text-xs bg-white border border-border rounded-full px-3 py-1 text-text-muted">{tag}</span>
                 ))}
               </div>
             )}

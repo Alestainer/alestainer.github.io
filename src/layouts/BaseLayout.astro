@@ -37,6 +37,9 @@ const { title, description, image, canonical, type, noindex, schemas = [] } = As
       noindex={noindex}
     />
     {schemas.length > 0 && <Schema schemas={schemas} />}
+    <link rel="alternate" type="application/rss+xml" title="Anton Nikolaev — AI Engineering Blog" href="/rss.xml" />
+    <link rel="webmention" href="https://webmention.io/alestainer.com/webmention" />
+    <link rel="pingback" href="https://webmention.io/xmlrpc" />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />
