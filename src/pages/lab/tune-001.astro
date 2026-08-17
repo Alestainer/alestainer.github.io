@@ -1,13 +1,13 @@
 ---
 // Temporary tuning page — compare hard-core minSep values against the Poisson reference.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const opts = [0.032, 0.036, 0.040, 0.044, 0.058];
+const opts = [0.036, 0.032, 0.028, 0.024];
 ---
 <BaseLayout title="Tune minSep" description="unlisted">
   <main class="mx-auto max-w-5xl px-4 py-8">
     <h1 class="text-xl font-semibold mb-1">Hard-core spacing candidates</h1>
     <p class="text-sm text-[var(--color-text-muted)] mb-6">Same seed throughout. Rightmost is the true Poisson reference — the target is "evener than that, but not a lattice".</p>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
       {opts.map((r) => (
         <div><canvas data-r={r} width="400" height="400" class="w-full h-auto border border-[var(--color-border)] rounded"></canvas>
         <div class="text-center text-xs mt-1 font-mono">{r.toFixed(3)}</div></div>

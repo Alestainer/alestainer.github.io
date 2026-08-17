@@ -7,7 +7,7 @@ export interface Props {
   n?: number;
   minSep?: number;
 }
-const { seed = 20260817, n = 120, minSep = 0.040 } = Astro.props;
+const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
 ---
 
 <point-pattern-picker data-seed={seed} data-n={n} data-minsep={minSep}>
@@ -108,7 +108,7 @@ const { seed = 20260817, n = 120, minSep = 0.040 } = Astro.props;
     connectedCallback() {
       this.seed = Number(this.dataset.seed) || 1;
       this.n = Number(this.dataset.n) || 120;
-      this.minSep = Number(this.dataset.minsep) || 0.040;
+      this.minSep = Number(this.dataset.minsep) || 0.028;
       this.render();
       this.querySelectorAll<HTMLButtonElement>('.ppp-panel').forEach((btn) => {
         btn.addEventListener('click', () => this.choose(Number(btn.dataset.panel)));
