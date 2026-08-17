@@ -14,11 +14,11 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
   <figure class="not-prose my-10">
     <div class="grid grid-cols-2 gap-3 sm:gap-4">
       <button type="button" data-panel="0" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
-        <canvas width="600" height="600" class="block w-full h-auto rounded"></canvas>
+        <canvas width="600" height="600" class="ppp-dots block w-full h-auto rounded"></canvas>
         <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">A</span>
       </button>
       <button type="button" data-panel="1" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
-        <canvas width="600" height="600" class="block w-full h-auto rounded"></canvas>
+        <canvas width="600" height="600" class="ppp-dots block w-full h-auto rounded"></canvas>
         <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">B</span>
       </button>
     </div>
@@ -29,6 +29,25 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
 
     <div class="ppp-result mt-4 hidden rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></div>
 
+    <div class="ppp-analysis mt-6 hidden">
+      <p class="text-sm leading-relaxed text-[var(--color-text)]">
+        Here is how you settle it, using the method R. D. Clarke published in
+        <strong>one page in 1946</strong>. Divide each square into a grid, count the dots in every cell, and
+        compare how often cells hold 0, 1, 2, 3&nbsp;dots to what pure chance predicts (the dashed line).
+      </p>
+      <div class="mt-4 grid grid-cols-2 gap-3 sm:gap-4">
+        <div>
+          <canvas class="ppp-hist block w-full h-auto" data-side="0" data-h="150" width="600" height="300"></canvas>
+          <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p>
+        </div>
+        <div>
+          <canvas class="ppp-hist block w-full h-auto" data-side="1" data-h="150" width="600" height="300"></canvas>
+          <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p>
+        </div>
+      </div>
+      <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></p>
+    </div>
+
     <div class="mt-4 flex items-center justify-center gap-3 text-xs text-[var(--color-text-muted)]">
       <button type="button" class="ppp-reset rounded border border-[var(--color-border)] px-3 py-1 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]">New pair</button>
       <span class="ppp-seed font-mono"></span>
@@ -37,6 +56,12 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
 </point-pattern-picker>
 
 <script>
+  import {
+    cellCounts, countHistogram, poissonExpected, varianceMeanRatio, drawGrid, drawHistogram,
+  } from './lib/pointstats';
+
+  const GRID_K = 10; // 100 cells; with n=120 that is lambda = 1.2, close to Clarke's 0.93
+
   // Deterministic PRNG (mulberry32) — never Math.random, so every figure is reproducible
   // and a reader can share "seed 20260817" and see exactly this pair.
   function mulberry32(a: number) {
@@ -77,7 +102,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
     return pts;
   }
 
-  function draw(canvas: HTMLCanvasElement, pts: Pt[]) {
+  function draw(canvas: HTMLCanvasElement, pts: Pt[], showGrid = false) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const cssW = canvas.clientWidth || 300;
     canvas.width = Math.round(cssW * dpr);
@@ -90,6 +115,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
     const pad = S * 0.04;
     const inner = S - pad * 2;
     const rad = Math.max(2, S * 0.0075);
+    if (showGrid) drawGrid(ctx, S, pad, GRID_K);
     ctx.fillStyle = '#1e293b';
     for (const [x, y] of pts) {
       ctx.beginPath();
@@ -134,6 +160,8 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       this.ptsB = this.randomIndex === 0 ? h : p;
       this.paint();
 
+      this.showGrid = false;
+      (this.querySelector('.ppp-analysis') as HTMLElement).classList.add('hidden');
       const res = this.querySelector('.ppp-result') as HTMLElement;
       res.classList.add('hidden');
       res.innerHTML = '';
@@ -149,10 +177,54 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       (this.querySelector('.ppp-seed') as HTMLElement).textContent = `seed ${this.seed}`;
     }
 
+    private showGrid = false;
+
     private paint() {
-      const cs = this.querySelectorAll<HTMLCanvasElement>('canvas');
-      draw(cs[0], this.ptsA);
-      draw(cs[1], this.ptsB);
+      const cs = this.querySelectorAll<HTMLCanvasElement>('canvas.ppp-dots');
+      draw(cs[0], this.ptsA, this.showGrid);
+      draw(cs[1], this.ptsB, this.showGrid);
+    }
+
+    /** Phase 3: Clarke's counts-per-cell test, run live on the pair just judged. */
+    private analyse() {
+      this.showGrid = true;
+      this.paint();
+
+      const nCells = GRID_K * GRID_K;
+      const lambda = this.n / nCells;
+      const maxBin = 4;
+      const expected = poissonExpected(lambda, nCells, maxBin);
+
+      const hists = this.querySelectorAll<HTMLCanvasElement>('canvas.ppp-hist');
+      const vmrEls = this.querySelectorAll<HTMLElement>('.ppp-vmr');
+      const sides: Pt[][] = [this.ptsA, this.ptsB];
+      const vmrs: number[] = [];
+
+      sides.forEach((pts, idx) => {
+        const counts = cellCounts(pts, GRID_K);
+        const observed = countHistogram(counts, maxBin);
+        const v = varianceMeanRatio(counts);
+        vmrs.push(v);
+        const isRandom = idx === this.randomIndex;
+        drawHistogram(hists[idx], observed, expected, {
+          barColor: isRandom ? '#2563eb' : '#94a3b8',
+        });
+        vmrEls[idx].innerHTML =
+          `${idx === 0 ? 'A' : 'B'} &middot; variance / mean = <strong>${v.toFixed(2)}</strong>`;
+      });
+
+      const rIdx = this.randomIndex;
+      const oIdx = 1 - rIdx;
+      const rName = rIdx === 0 ? 'A' : 'B';
+      const oName = oIdx === 0 ? 'A' : 'B';
+      (this.querySelector('.ppp-verdict') as HTMLElement).innerHTML =
+        `Pure chance gives a variance-to-mean ratio of <strong>1.00</strong>. ` +
+        `<strong>${rName}</strong> comes out at <strong>${vmrs[rIdx].toFixed(2)}</strong> and its bars sit on the ` +
+        `dashed line. <strong>${oName}</strong> comes out at <strong>${vmrs[oIdx].toFixed(2)}</strong> \u2014 too few ` +
+        `empty cells and too few crowded ones. That gap is the whole illusion: the random pattern has ` +
+        `<em>more</em> empty space and <em>more</em> crowding than the one that looks random.`;
+
+      (this.querySelector('.ppp-analysis') as HTMLElement).classList.remove('hidden');
     }
 
     private choose(i: number) {
@@ -175,6 +247,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       res.innerHTML = correct
         ? '<strong>Correct.</strong> The pattern you picked was generated by placing every point independently and uniformly — a homogeneous Poisson process. The other one had a minimum distance enforced between points.'
         : '<strong>Not quite.</strong> You picked the pattern with a <em>minimum distance enforced between points</em>. The truly random one is the other — the clumpier-looking one. Independent uniform points cluster and leave voids; evenness is a sign of a constraint, not of chance.';
+      this.analyse();
       this.dispatchEvent(new CustomEvent('ppp:answer', {
         bubbles: true,
         detail: { correct, seed: this.seed },
