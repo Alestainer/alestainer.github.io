@@ -1,0 +1,188 @@
+---
+// Post 001 — "Which map is random?"
+// Two point patterns: one homogeneous Poisson, one hard-core (minimum separation).
+// Reader commits to a choice before anything is revealed.
+export interface Props {
+  seed?: number;
+  n?: number;
+  minSep?: number;
+}
+const { seed = 20260817, n = 120, minSep = 0.058 } = Astro.props;
+---
+
+<point-pattern-picker data-seed={seed} data-n={n} data-minsep={minSep}>
+  <figure class="not-prose my-10">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+      <button type="button" data-panel="0" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
+        <canvas width="600" height="600" class="block w-full h-auto rounded"></canvas>
+        <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">A</span>
+      </button>
+      <button type="button" data-panel="1" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
+        <canvas width="600" height="600" class="block w-full h-auto rounded"></canvas>
+        <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">B</span>
+      </button>
+    </div>
+
+    <p class="ppp-prompt mt-4 text-center text-base font-medium text-[var(--color-text)]">
+      One of these is truly random. Which one?
+    </p>
+
+    <div class="ppp-result mt-4 hidden rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></div>
+
+    <div class="mt-4 flex items-center justify-center gap-3 text-xs text-[var(--color-text-muted)]">
+      <button type="button" class="ppp-reset rounded border border-[var(--color-border)] px-3 py-1 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]">New pair</button>
+      <span class="ppp-seed font-mono"></span>
+    </div>
+  </figure>
+</point-pattern-picker>
+
+<script>
+  // Deterministic PRNG (mulberry32) — never Math.random, so every figure is reproducible
+  // and a reader can share "seed 20260817" and see exactly this pair.
+  function mulberry32(a: number) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  type Pt = [number, number];
+
+  // Homogeneous Poisson process on the unit square: n independent uniform points.
+  function poisson(rng: () => number, n: number): Pt[] {
+    const pts: Pt[] = [];
+    for (let i = 0; i < n; i++) pts.push([rng(), rng()]);
+    return pts;
+  }
+
+  // Hard-core process (Matern type II-ish, via dart throwing): uniform points
+  // subject to a minimum pairwise separation. Looks "evenly spread" to people.
+  function hardcore(rng: () => number, n: number, r: number): Pt[] {
+    const pts: Pt[] = [];
+    const r2 = r * r;
+    let attempts = 0;
+    const maxAttempts = n * 4000;
+    while (pts.length < n && attempts < maxAttempts) {
+      attempts++;
+      const p: Pt = [rng(), rng()];
+      let ok = true;
+      for (let i = 0; i < pts.length; i++) {
+        const dx = pts[i][0] - p[0], dy = pts[i][1] - p[1];
+        if (dx * dx + dy * dy < r2) { ok = false; break; }
+      }
+      if (ok) pts.push(p);
+    }
+    return pts;
+  }
+
+  function draw(canvas: HTMLCanvasElement, pts: Pt[]) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 300;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssW * dpr);
+    const ctx = canvas.getContext('2d')!;
+    const S = canvas.width;
+    ctx.clearRect(0, 0, S, S);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, S, S);
+    const pad = S * 0.04;
+    const inner = S - pad * 2;
+    const rad = Math.max(2, S * 0.0075);
+    ctx.fillStyle = '#1e293b';
+    for (const [x, y] of pts) {
+      ctx.beginPath();
+      ctx.arc(pad + x * inner, pad + y * inner, rad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  class PointPatternPicker extends HTMLElement {
+    private seed!: number;
+    private n!: number;
+    private minSep!: number;
+    private randomIndex = 0;
+    private answered = false;
+
+    connectedCallback() {
+      this.seed = Number(this.dataset.seed) || 1;
+      this.n = Number(this.dataset.n) || 120;
+      this.minSep = Number(this.dataset.minsep) || 0.058;
+      this.render();
+      this.querySelectorAll<HTMLButtonElement>('.ppp-panel').forEach((btn) => {
+        btn.addEventListener('click', () => this.choose(Number(btn.dataset.panel)));
+      });
+      this.querySelector('.ppp-reset')!.addEventListener('click', () => {
+        this.seed = (this.seed * 1664525 + 1013904223) >>> 0;
+        this.answered = false;
+        this.render();
+      });
+      window.addEventListener('resize', () => this.paint());
+    }
+
+    private ptsA: Pt[] = [];
+    private ptsB: Pt[] = [];
+
+    private render() {
+      const rng = mulberry32(this.seed);
+      // Which side gets the true Poisson pattern is itself seeded.
+      this.randomIndex = rng() < 0.5 ? 0 : 1;
+      const p = poisson(mulberry32(this.seed ^ 0x9e3779b9), this.n);
+      const h = hardcore(mulberry32(this.seed ^ 0x85ebca6b), this.n, this.minSep);
+      this.ptsA = this.randomIndex === 0 ? p : h;
+      this.ptsB = this.randomIndex === 0 ? h : p;
+      this.paint();
+
+      const res = this.querySelector('.ppp-result') as HTMLElement;
+      res.classList.add('hidden');
+      res.innerHTML = '';
+      (this.querySelector('.ppp-prompt') as HTMLElement).textContent =
+        'One of these is truly random. Which one?';
+      this.querySelectorAll<HTMLElement>('.ppp-panel').forEach((b) => {
+        b.classList.remove('border-[var(--color-primary)]', 'opacity-50');
+        b.removeAttribute('disabled');
+      });
+      this.querySelectorAll<HTMLElement>('.ppp-label').forEach((el, i) => {
+        el.textContent = i === 0 ? 'A' : 'B';
+      });
+      (this.querySelector('.ppp-seed') as HTMLElement).textContent = `seed ${this.seed}`;
+    }
+
+    private paint() {
+      const cs = this.querySelectorAll<HTMLCanvasElement>('canvas');
+      draw(cs[0], this.ptsA);
+      draw(cs[1], this.ptsB);
+    }
+
+    private choose(i: number) {
+      if (this.answered) return;
+      this.answered = true;
+      const correct = i === this.randomIndex;
+      this.querySelectorAll<HTMLElement>('.ppp-panel').forEach((b, idx) => {
+        b.setAttribute('disabled', 'true');
+        if (idx !== this.randomIndex) b.classList.add('opacity-50');
+        else b.classList.add('border-[var(--color-primary)]');
+      });
+      this.querySelectorAll<HTMLElement>('.ppp-label').forEach((el, idx) => {
+        el.textContent = idx === this.randomIndex
+          ? `${idx === 0 ? 'A' : 'B'} — truly random`
+          : `${idx === 0 ? 'A' : 'B'} — minimum spacing enforced`;
+      });
+      (this.querySelector('.ppp-prompt') as HTMLElement).textContent = '';
+      const res = this.querySelector('.ppp-result') as HTMLElement;
+      res.classList.remove('hidden');
+      res.innerHTML = correct
+        ? '<strong>Correct.</strong> The pattern you picked was generated by placing every point independently and uniformly — a homogeneous Poisson process. The other one had a minimum distance enforced between points.'
+        : '<strong>Not quite.</strong> You picked the pattern with a <em>minimum distance enforced between points</em>. The truly random one is the other — the clumpier-looking one. Independent uniform points cluster and leave voids; evenness is a sign of a constraint, not of chance.';
+      this.dispatchEvent(new CustomEvent('ppp:answer', {
+        bubbles: true,
+        detail: { correct, seed: this.seed },
+      }));
+    }
+  }
+
+  if (!customElements.get('point-pattern-picker')) {
+    customElements.define('point-pattern-picker', PointPatternPicker);
+  }
+</script>
