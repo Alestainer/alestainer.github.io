@@ -8,7 +8,13 @@ One of these is truly random. Which one?
 Here is how you settle it, using the method R. D. Clarke published in
 <strong>one page in 1946</strong>. Divide each square into a grid, count the dots in every cell, and
         compare how often cells hold 0, 1, 2, 3&nbsp;dots to what pure chance predicts (the dashed line).
-</p> <div class="mt-4 grid grid-cols-2 gap-3 sm:gap-4"> <div> <canvas class="ppp-hist block w-full h-auto" data-side="0" data-h="150" width="600" height="300"></canvas> <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p> </div> <div> <canvas class="ppp-hist block w-full h-auto" data-side="1" data-h="150" width="600" height="300"></canvas> <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p> </div> </div> <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></p> <div class="mt-5 text-sm leading-relaxed text-[var(--color-text)]"> <p class="font-medium">Why the two histograms have different shapes</p> <p class="mt-2">
+</p> <div class="mt-4 grid grid-cols-2 gap-3 sm:gap-4"> <div> <canvas class="ppp-hist block w-full h-auto" data-side="0" data-h="150" width="600" height="300"></canvas> <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p> </div> <div> <canvas class="ppp-hist block w-full h-auto" data-side="1" data-h="150" width="600" height="300"></canvas> <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p> </div> </div> <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></p> <p class="mt-4 text-sm leading-relaxed text-[var(--color-text)]">
+This is how the London bombing speculations were debunked. In 1944 people were certain the
+        V-1s were being aimed &mdash; some districts hit again and again, others untouched, with theories
+        about German precision and about which neighbourhoods were targets. Clarke ran the test above
+        on 576 squares of south London and the impacts came out Poisson. Nobody was aiming. The
+        clustering was what randomness looks like.
+</p> <div class="mt-5 text-sm leading-relaxed text-[var(--color-text)]"> <p class="font-medium">Why the two histograms have different shapes</p> <p class="mt-2">
 Both squares hold exactly the same number of dots, so both histograms have the same
 <em>average</em> dots per cell. What differs is the <em>spread</em>. Scattering points independently
           means nothing stops two of them landing in the same cell, so some cells end up crowded &mdash; and
