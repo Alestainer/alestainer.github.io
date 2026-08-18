@@ -34,7 +34,7 @@ const opts = [0.036, 0.032, 0.028, 0.024];
     const ctx = c.getContext('2d')!;
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,S,S);
     const pad=S*0.04, inner=S-pad*2;
-    ctx.fillStyle='#1e293b';
+    ctx.fillStyle='#111111';
     for(const [x,y] of pts){ctx.beginPath();ctx.arc(pad+x*inner,pad+y*inner,S*0.008,0,Math.PI*2);ctx.fill();}
   });
 </script>

@@ -63,7 +63,7 @@ export function drawGrid(
   size: number,
   pad: number,
   k: number,
-  color = 'rgba(37, 99, 235, 0.30)',
+  color = 'rgba(17, 17, 17, 0.22)',
 ) {
   const inner = size - pad * 2;
   ctx.save();
@@ -106,19 +106,19 @@ export function drawHistogram(
   const y = (v: number) => padT + plotH - (v / yMax) * plotH;
 
   // baseline
-  ctx.strokeStyle = 'rgba(100,116,139,0.45)';
+  ctx.strokeStyle = 'rgba(17,17,17,0.35)';
   ctx.lineWidth = Math.max(1, W * 0.002);
   ctx.beginPath(); ctx.moveTo(padL, padT + plotH); ctx.lineTo(padL + plotW, padT + plotH); ctx.stroke();
 
   // observed bars
-  ctx.fillStyle = opts.barColor || '#2563eb';
+  ctx.fillStyle = opts.barColor || '#111111';
   for (let i = 0; i < n; i++) {
     const h = padT + plotH - y(observed[i]);
     ctx.fillRect(x(i), y(observed[i]), barW, h);
   }
 
   // Poisson expectation as a stepped outline
-  ctx.strokeStyle = '#0f172a';
+  ctx.strokeStyle = '#111111';
   ctx.lineWidth = Math.max(1.5, W * 0.004);
   ctx.setLineDash([W * 0.012, W * 0.010]);
   ctx.beginPath();
@@ -131,7 +131,7 @@ export function drawHistogram(
   ctx.setLineDash([]);
 
   // x labels
-  ctx.fillStyle = 'rgba(100,116,139,0.95)';
+  ctx.fillStyle = 'rgba(17,17,17,0.75)';
   ctx.font = `${Math.round(H * 0.105)}px ui-monospace, monospace`;
   ctx.textAlign = 'center';
   for (let i = 0; i < n; i++) {

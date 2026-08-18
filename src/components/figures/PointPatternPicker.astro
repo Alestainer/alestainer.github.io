@@ -196,7 +196,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
     const inner = S - pad * 2;
     const rad = Math.max(2, S * 0.0075);
     if (showGrid) drawGrid(ctx, S, pad, GRID_K);
-    ctx.fillStyle = '#1e293b';
+    ctx.fillStyle = '#111111';
     for (const [x, y] of pts) {
       ctx.beginPath();
       ctx.arc(pad + x * inner, pad + y * inner, rad, 0, Math.PI * 2);
@@ -288,7 +288,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         vmrs.push(v);
         const isRandom = idx === this.randomIndex;
         drawHistogram(hists[idx], observed, expected, {
-          barColor: isRandom ? '#2563eb' : '#94a3b8',
+          barColor: isRandom ? '#111111' : '#bbbbbb',
         });
         vmrEls[idx].innerHTML =
           `${idx === 0 ? 'A' : 'B'} &middot; variance / mean = <strong>${v.toFixed(2)}</strong>`;
