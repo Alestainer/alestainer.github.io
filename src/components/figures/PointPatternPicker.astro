@@ -120,6 +120,44 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         <em>Journal of the Institute of Actuaries</em> <strong>72</strong> (1946), p.&nbsp;481.
         Clarke divided 144&nbsp;km&sup2; of south London into 576 quarter-km squares and counted V-1 impacts per square.
       </p>
+      <div class="mt-6 border-t border-[var(--color-border)] pt-5 text-sm leading-relaxed text-[var(--color-text)]">
+        <p class="font-medium">How the models do</p>
+        <p class="mt-2">
+          The same 20 images, put to the top reasoning model from each of six labs. Chance is 50%.
+        </p>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-[var(--color-border)] text-[var(--color-text-muted)]">
+                <th class="py-1 pr-3 font-medium">Model</th>
+                <th class="py-1 pr-3 font-medium text-right">Correct</th>
+                <th class="py-1 font-medium text-right">Accuracy</th>
+              </tr>
+            </thead>
+            <tbody class="font-mono text-xs sm:text-sm">
+              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">gemini-3.7-flash</td><td class="py-1 pr-3 text-right">20/20</td><td class="py-1 text-right font-semibold">100%</td></tr>
+              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">gpt-5.6-sol</td><td class="py-1 pr-3 text-right">19/20</td><td class="py-1 text-right">95%</td></tr>
+              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">qwen3.8-max</td><td class="py-1 pr-3 text-right">19/20</td><td class="py-1 text-right">95%</td></tr>
+              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">claude-opus-5</td><td class="py-1 pr-3 text-right">18/20</td><td class="py-1 text-right">90%</td></tr>
+              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">kimi-k3</td><td class="py-1 pr-3 text-right">18/20</td><td class="py-1 text-right">90%</td></tr>
+              <tr><td class="py-1 pr-3">claude-sonnet-5</td><td class="py-1 pr-3 text-right">17/20</td><td class="py-1 text-right">85%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-4 rounded-lg bg-[var(--color-surface)] p-4">
+          Anything but 100% here I would count as a failure. That is what understanding a concept
+          means rather than guessing at it: once you have it, you apply it consistently. Every human
+          who is taught this rule can then get 20 out of 20. If you do not believe me, do 20 rounds
+          yourself after reading the explanation above &mdash; press <em>New pair</em> and keep score.
+        </p>
+        <p class="mt-3 text-xs text-[var(--color-text-muted)]">
+          20 images, identical for every model, generated from a fixed seed. Run it with your own key:
+          <a class="text-[var(--color-primary)] underline" href="https://github.com/Alestainer/statistics-intuitions/tree/main/evals" target="_blank" rel="noopener">evals/</a>.
+          Every individual answer is recorded in
+          <a class="text-[var(--color-primary)] underline" href="https://github.com/Alestainer/statistics-intuitions/tree/main/evals/results/which-map-is-random" target="_blank" rel="noopener">results/</a>.
+        </p>
+      </div>
+
       <p class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-relaxed text-[var(--color-text-muted)]">
         <a href="https://colab.research.google.com/github/Alestainer/statistics-intuitions/blob/main/notebooks/01-which-map-is-random.ipynb" target="_blank" rel="noopener" class="inline-flex shrink-0">
           <img src="/img/colab-badge.svg" alt="Open the reproduction notebook in Google Colab" width="117" height="20" loading="lazy" decoding="async" />

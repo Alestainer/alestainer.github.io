@@ -5,115 +5,155 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.github.io' },
-    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://alestainer.github.io/about' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.com' },
+    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://alestainer.com/about' },
   ],
 };
 
+const competencies = [
+  {
+    area: 'Machine Learning',
+    detail: 'Deep learning, reinforcement learning, multi-agent systems, causal inference, computer vision, NLP, search and ranking, conversational AI.',
+  },
+  {
+    area: 'Learning for Physical Systems',
+    detail: 'RL policies for embodied AI, sim-to-real transfer, vision-sensory-motor policies for dexterous manipulation, policy robustness. NVIDIA Isaac Lab, Gazebo, ROS.',
+  },
+  {
+    area: 'Scientific ML',
+    detail: 'Surrogate modeling of physical simulations, climate and geophysical time series, forecasting under sparse and irregular observation.',
+  },
+  {
+    area: 'Experimentation',
+    detail: 'A/B testing infrastructure, causal-inference systems, evaluation design for research-to-production transitions.',
+  },
+  {
+    area: 'Tools & Systems',
+    detail: 'Python, C++, PyTorch, TensorFlow, SQL, AWS, GCP, Elasticsearch, Airflow, Docker, Slurm, dbt, big-data pipelines at 6 TB/day.',
+  },
+];
+
 const experience = [
   {
-    title: 'AI Consultant',
+    title: 'Co-Lead, ML Research (Robotics)',
     company: 'Hawaii AI Initiative',
     location: 'Honolulu, HI',
     period: 'Nov 2025 — Present',
     bullets: [
-      'Implemented agentic workflow for large-scale data mining and analysis for a banking client.',
-      'Enabled automated insight generation for C-suite with data grounding.',
+      'Intrinsic AI for Industry Challenge (Alphabet): developed vision-sensory-motor policies for dexterous manipulation on server-tray wiring assembly, in Gazebo and NVIDIA Isaac Lab. Placed 56th globally among 160+ specialized teams.',
+      'Confidential robotics research (stealth): architecting high-precision reinforcement-learning policies for embodied AI, leading the transition from simulation to hardware with a focus on policy robustness.',
+      'Humanoid robotics education (Unitree G1), volunteer: helped establish a humanoid-robotics program for high-school students; part of the team that built a pipeline retargeting recorded human motion onto the G1, and supervised students through deployment on real hardware.',
     ],
   },
   {
-    title: 'AI Consultant',
-    company: 'C2C Contract',
+    title: 'CTO',
+    company: 'Salo Works',
+    location: 'Remote',
+    period: 'Nov 2025 — Mar 2026',
+    bullets: [
+      'Architected and deployed a customer analytics engine for a banking client that automatically identifies behavioral patterns, loss reasons, and re-engagement opportunities across the customer lifecycle — surfacing hundreds of thousands of dollars in recoverable revenue.',
+      'Built a data-grounded insight-generation layer for C-suite stakeholders, with every generated claim traceable to its supporting evidence.',
+      'Retrieval-augmented generation over vector databases, deployed on GCP with a multi-tenant architecture for privacy compliance.',
+    ],
+  },
+  {
+    title: 'CEO & Technical Lead',
+    company: 'KindaMe',
     location: 'Remote',
     period: 'Nov 2024 — Present',
     bullets: [
-      'Advised and executed AI strategy, architecture, and implementation across agriculture, cybersecurity, financial services, robotics, and entertainment.',
-      'Led end-to-end engagements: problem framing, model selection, system design, deployment.',
+      'Founded an authorized AI likeness platform creating monetizable, personalized AI versions of creators; designed the core ML architecture end-to-end.',
+      'Designed responsive personality models that learn individual communication style, tone, and behavioral patterns from creator data.',
+      'Owned every technical decision across ML, infrastructure, and product as sole technical founder.',
     ],
   },
   {
-    title: 'Principal ML Researcher',
-    company: 'C2C Consulting Contract',
+    title: 'Principal ML Scientist',
+    company: 'Fermata',
     location: 'Remote',
     period: 'Sep 2024 — Nov 2024',
     bullets: [
-      'Designed and implemented a prediction-aggregation system that improved detection robustness and reduced manual intervention.',
-      'Provided architectural guidance to transition research concepts into deployable AI systems.',
+      'Designed a prediction-aggregation system for a computer-vision pipeline detecting plant disease, improving detection robustness and reducing manual intervention.',
+      'Guided the transition of research prototypes into production-ready systems through architecture review and design.',
+    ],
+  },
+  {
+    title: 'Sabbatical — independent projects',
+    company: '',
+    location: '',
+    period: 'Oct 2023 — Sep 2024',
+    bullets: [
+      'Built personal projects end-to-end: two games, a social media platform, and a dating platform.',
     ],
   },
   {
     title: 'Senior Machine Learning Scientist',
     company: 'Saks Fifth Avenue',
     location: 'New York, NY',
-    period: 'May 2022 — Oct 2023',
+    period: 'Jun 2021 — Oct 2023',
     bullets: [
-      'Led development and architecture of a search feature used by millions of customers per month. A/B testing showed 30% improvement in mobile search engagement.',
-      'Designed and implemented causal inference algorithms for customer experience and managerial decision-making.',
-      'Contributed to the Data Vault ingesting 6 TB of data per day.',
+      'Promoted from ML Scientist to Senior ML Scientist.',
+      'Autocomplete: owned the deliverable across product, frontend, backend and QA on a compressed timeline. Personally implemented the ML experimentation and inference plus the backend data-processing and serving code — retrieval, relevance tuning and re-ranking on Elasticsearch, serving millions of shoppers monthly. A/B test showed a 30% lift in mobile search engagement.',
+      'Led a team of 4 on causal inference analysis, and designed the causal-inference system measuring the business impact of algorithmic interventions. The statistical framework was adopted cross-functionally for customer-experience decisions.',
+      'Architected core components of the "Data Vault", a centralized platform ingesting 6 TB/day as the single source of truth for personalization, experimentation, and analytics.',
     ],
-  },
-  {
-    title: 'Machine Learning Scientist',
-    company: 'Saks Fifth Avenue',
-    location: 'New York, NY',
-    period: 'Jun 2021 — May 2022',
-    bullets: [],
   },
   {
     title: 'Data Science Fellow',
-    company: 'Hawaii Data Science Institute',
+    company: "Hawai'i Data Science Institute",
     location: 'Honolulu, HI',
     period: 'Aug 2019 — Aug 2020',
     bullets: [
-      'Built a deep learning model that sped up cosmic radiation calculations by a factor of one million with under 3% relative error.',
-      'Created a climate model for sea surface temperature anomalies that matched or beat classical models trained on real data.',
-      'Built a computer vision system classifying 150 fish species and estimating fish size.',
+      'FishNet: built an end-to-end deep-learning system processing hundreds of thousands of underwater images to classify 150 fish species and estimate size, replacing hundreds of hours of manual annotation. Published, IEEE.',
+      'First-authored a deep-learning surrogate for Atlantic sea-surface temperature forecasting: a CNN with U-Net/ResNet-style skip connections that matched state-of-the-art dynamical forecast models at a fraction of their cost, and beat persistence baselines at 1–6 month lead times. Architecture selected by Bayesian optimization over 400 trained networks, run multi-GPU on Slurm. Published, AAAI.',
+      'Built a neural network for galactic cosmic ray intensity estimation, approximating classical differential-equation solvers roughly 1,000,000× faster while removing their numerical instabilities.',
+      'Contributed quantitative analysis to a marine spatial-management study published in Nature Communications.',
     ],
   },
   {
-    title: 'Lecturer',
-    company: 'University of Hawaii at Manoa',
-    location: 'Honolulu, HI',
-    period: 'Aug 2018 — Dec 2018',
-    bullets: [
-      'Taught R for Data Analysis and Visualization. Supervised 11 student projects.',
-    ],
-  },
-  {
-    title: 'ML Engineer, Graduate Assistant',
+    title: 'Machine Learning Engineer',
     company: 'UHERO',
     location: 'Honolulu, HI',
-    period: 'Aug 2016 — May 2019',
+    period: 'Jan 2018 — May 2019',
     bullets: [
-      'Created a data science pipeline for housing market forecasting, processing 300,000 properties.',
-      'Taught Statistics, Intermediate Microeconomics, and Game Theory to classes of up to 150 students.',
+      'Built an end-to-end data science pipeline — scraping, storage, preprocessing, analytics — for housing-market forecasting across 300,000 properties, producing daily forecasts.',
     ],
   },
   {
-    title: 'Junior ML Researcher',
+    title: 'Graduate Teaching Assistant',
+    company: "University of Hawai'i at Mānoa",
+    location: 'Honolulu, HI',
+    period: 'Aug 2016 — Jan 2018',
+    bullets: [
+      'Taught Statistics, Microeconomics and Game Theory alongside the M.A. Economics.',
+    ],
+  },
+  {
+    title: 'Junior Machine Learning Researcher',
     company: 'Sberbank Technology',
-    location: 'Moscow, RU',
+    location: 'Moscow',
     period: 'Oct 2015 — Jul 2016',
     bullets: [
-      'Designed NLP system for service request handling across 5,000+ classes for the largest bank in Eastern Europe.',
+      'Prototyped an NLP system for automated service-request handling across 5,000+ categories for the largest bank in Eastern Europe.',
+      'Built anomaly detection for request-volume spikes.',
     ],
   },
 ];
 
 const education = [
   {
-    degree: 'M.S. Computer Science',
-    school: 'University of Hawaii at Manoa',
+    degree: 'M.Sc. Computer Science',
+    school: "University of Hawai'i at Mānoa",
     period: '2019 — 2020',
   },
   {
     degree: 'M.A. Economics',
-    school: 'University of Hawaii',
-    period: '2018',
+    school: "University of Hawai'i at Mānoa",
+    period: '2016 — 2018',
   },
   {
-    degree: 'B.S. Computer Science',
-    school: 'Moscow Institute of Physics and Technology',
+    degree: 'B.Sc. Applied Mathematics & Physics',
+    school: 'Moscow Institute of Physics & Technology',
     period: '2011 — 2015',
   },
 ];
@@ -121,28 +161,38 @@ const education = [
 const publications = [
   {
     title: 'FishNet: Deep Neural Networks for Low-Cost Fish Stock Estimation',
+    authors: "Mots'oehli, M., Nikolaev, A., et al.",
     venue: 'IEEE',
     year: '2024',
-    url: 'https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10622134&isnumber=10622106',
+    url: 'https://arxiv.org/abs/2403.10916',
   },
   {
     title: 'Deep Learning for Climate Models of the Atlantic Ocean',
-    venue: 'CEUR Workshop Proceedings',
+    authors: 'Nikolaev, A., Richter, I., & Sadowski, P.',
+    venue: 'AAAI Workshop (CEUR-WS Vol. 2587)',
     year: '2020',
-    url: 'http://ceur-ws.org/Vol-2587/article_3.pdf',
+    url: 'https://ceur-ws.org/Vol-2587/article_3.pdf',
   },
   {
-    title: 'Impact of two of the world\'s largest protected areas on longline fishery catch rates',
+    title: "Impact of two of the world's largest protected areas on longline fishery catch rates",
+    authors: 'Co-author',
     venue: 'Nature Communications',
     year: '2020',
     url: 'https://www.nature.com/articles/s41467-020-14588-3',
   },
 ];
+
+const awards = [
+  { name: 'Winner, All-Russian Physics Olympiad "Phystech"', year: '2011' },
+  { name: 'Prize, State-Level All-Russian Mathematics Olympiad', year: '2011' },
+  { name: "Hawai'i Data Science Institute Fellowship", year: '2019' },
+  { name: 'US Department of State Opportunity Grant', year: '2015' },
+];
 ---
 
 <BaseLayout
-  title="About — Anton Nikolaev"
-  description="Principal AI Engineer with a background in mathematics, physics, and economics. A decade of experience building ML systems from research to production."
+  title="About — Anton Nikolaev, Principal ML Scientist"
+  description="Machine learning scientist with 10+ years bridging research and production — deep learning, reinforcement learning for embodied AI, scientific ML, and causal inference. Published in Nature Communications, IEEE, and AAAI."
   schemas={[breadcrumbSchema]}
 >
   <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
@@ -155,14 +205,25 @@ const publications = [
     <h1 class="text-4xl sm:text-5xl font-bold text-text mb-6">About</h1>
     <div class="max-w-3xl text-lg text-text-muted leading-relaxed space-y-4 mb-16">
       <p>
-        I'm a computer scientist with a background in mathematics, physics, and economics. I've spent the last decade working on machine learning — from NLP and computer vision to causal inference and agentic systems.
+        I'm a machine learning scientist with over ten years bridging research and production, working across deep learning, reinforcement learning, and scientific ML. My depth is in causal inference and experimentation; my recent research applies RL and learned policies to embodied AI problems in simulation.
       </p>
       <p>
-        Most of my work has been at the intersection of research and engineering: figuring out what's possible, building it, and making sure it actually works in production. I've done this at Saks Fifth Avenue (search and causal inference at scale), at the University of Hawaii (climate modeling, cosmic radiation, fisheries), and now as an independent consultant across industries like banking, agriculture, cybersecurity, and robotics.
+        The foundation is multidisciplinary — M.Sc. Computer Science, M.A. Economics, B.Sc. Applied Mathematics &amp; Physics from MIPT — and I've pointed it at scientific modeling, production ML at scale, and learning for physical systems. Along the way: a search system serving millions of shoppers at Saks Fifth Avenue, a climate surrogate that matched dynamical forecast models at a fraction of their cost, and manipulation policies for a robotics challenge run by Alphabet's Intrinsic.
       </p>
       <p>
-        I studied computer science at MIPT in Moscow, then economics and CS at the University of Hawaii. I've published in Nature Communications and IEEE, and I've taught statistics and data analysis at the university level.
+        I've published in <em>Nature Communications</em>, IEEE, and AAAI, and I've taught statistics, microeconomics, and game theory at the university level.
       </p>
+    </div>
+
+    <!-- Core Competencies -->
+    <h2 class="text-3xl font-bold text-text mb-8">Core Competencies</h2>
+    <div class="space-y-4 mb-16">
+      {competencies.map((c) => (
+        <div class="border-l-2 border-border pl-6">
+          <h3 class="font-semibold text-text">{c.area}</h3>
+          <p class="text-sm text-text-muted leading-relaxed">{c.detail}</p>
+        </div>
+      ))}
     </div>
 
     <!-- Experience -->
@@ -173,12 +234,16 @@ const publications = [
           <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
             <div>
               <h3 class="font-semibold text-text">{job.title}</h3>
-              <p class="text-sm text-text-muted">{job.company} — {job.location}</p>
+              {job.company && (
+                <p class="text-sm text-text-muted">
+                  {job.company}{job.location && ` — ${job.location}`}
+                </p>
+              )}
             </div>
             <p class="text-sm text-text-muted shrink-0">{job.period}</p>
           </div>
           {job.bullets.length > 0 && (
-            <ul class="space-y-1 mt-2">
+            <ul class="space-y-1.5 mt-2">
               {job.bullets.map((bullet) => (
                 <li class="text-sm text-text-muted leading-relaxed">{bullet}</li>
               ))}
@@ -210,7 +275,18 @@ const publications = [
           <a href={pub.url} target="_blank" rel="noopener" class="font-semibold text-text hover:text-primary transition-colors">
             {pub.title}
           </a>
-          <p class="text-sm text-text-muted">{pub.venue}, {pub.year}</p>
+          <p class="text-sm text-text-muted">{pub.authors} — {pub.venue}, {pub.year}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Awards -->
+    <h2 class="text-3xl font-bold text-text mb-8">Awards &amp; Honors</h2>
+    <div class="space-y-4 mb-16">
+      {awards.map((award) => (
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 border-l-2 border-border pl-6">
+          <h3 class="font-semibold text-text">{award.name}</h3>
+          <p class="text-sm text-text-muted shrink-0">{award.year}</p>
         </div>
       ))}
     </div>

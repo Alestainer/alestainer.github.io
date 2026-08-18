@@ -5,20 +5,29 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Anton Nikolaev',
-  url: 'https://alestainer.github.io',
-  jobTitle: 'Principal AI Engineer',
+  url: 'https://alestainer.com',
+  jobTitle: 'Principal ML Scientist',
   knowsAbout: [
+    'Machine Learning',
+    'Deep Learning',
+    'Reinforcement Learning',
+    'Embodied AI and Robot Learning',
+    'Sim-to-Real Transfer',
+    'Scientific Machine Learning',
+    'Surrogate Modeling',
+    'Causal Inference',
+    'A/B Testing and Experimentation',
     'Agentic AI Systems',
-    'Generative AI',
     'Large Language Models (LLM)',
     'Natural Language Processing (NLP)',
-    'MLOps',
-    'LLMOps',
     'Computer Vision',
     'Retrieval-Augmented Generation (RAG)',
-    'Causal Inference',
-    'Deep Learning',
-    'Machine Learning',
+    'Search and Ranking',
+    'MLOps',
+  ],
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: "University of Hawai'i at Mānoa" },
+    { '@type': 'CollegeOrUniversity', name: 'Moscow Institute of Physics and Technology' },
   ],
   sameAs: [
     'https://github.com/alestainer',
@@ -29,8 +38,8 @@ const personSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Anton Nikolaev — AI Scientist & Engineer',
-  url: 'https://alestainer.github.io',
+  name: 'Anton Nikolaev — ML Scientist & Engineer',
+  url: 'https://alestainer.com',
 };
 
 const faqSchema = {
@@ -39,34 +48,42 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'What are agentic AI systems?',
+      name: 'What kind of ML work do you take on?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Agentic AI systems are autonomous programs that can plan, reason, use tools, and take actions to accomplish complex goals. Unlike simple chatbots, they maintain state, break down tasks, and iteratively work toward objectives — making them ideal for workflow automation, research assistance, and decision support.',
+        text: 'Problems where the modeling is the hard part: reinforcement learning and policies for physical systems, surrogate models for expensive simulations, causal inference and experiment design, and agentic LLM systems that have to be evaluated rather than demoed. I work from problem framing through to a system running in production.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is RAG and why does it matter?',
+      name: 'What is a surrogate model and when is it worth building?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Retrieval-Augmented Generation (RAG) is an architecture that connects large language models to your private data — documents, databases, APIs — so they can provide accurate, grounded answers instead of hallucinating. RAG is essential for enterprise AI applications where factual accuracy is critical.',
+        text: 'A surrogate model is a neural network trained to approximate an expensive physical simulation or numerical solver. It is worth building when you need to run the simulation many times — for forecasting, optimization, or control — and the solver is too slow. Well-built surrogates can be orders of magnitude faster than the solver they replace while staying within a few percent of it.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What is MLOps and why do I need it?',
+      name: 'What does sim-to-real transfer mean in robot learning?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'MLOps (Machine Learning Operations) brings DevOps practices to ML — automated training pipelines, model versioning, monitoring, and deployment. Without MLOps, models degrade silently in production. With it, you get reproducible, reliable AI systems that improve over time.',
+        text: 'Sim-to-real transfer is the practice of training a control policy in simulation, where data is cheap and failures are free, and then getting it to work on real hardware. The gap between the two is closed with domain randomization, careful reward and observation design, and robustness testing — the policy has to survive physics the simulator never modeled.',
       },
     },
     {
       '@type': 'Question',
-      name: 'How much does an AI consulting engagement cost?',
+      name: 'Why does causal inference matter for ML teams?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Engagements vary based on scope and complexity. A free initial consultation is offered to understand your needs and provide an estimate. Book a call to discuss your specific use case and budget.',
+        text: 'Predictive accuracy tells you what will happen; causal inference tells you what happens if you intervene. Product and business decisions are interventions, so measuring their effect needs experimental design and causal methods, not just model metrics. Without that framework, teams ship models and cannot say what they were worth.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does a consulting engagement cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Engagements vary based on scope and complexity. A free initial consultation is offered to understand the problem and provide an estimate. Book a call to discuss your specific use case and budget.',
       },
     },
   ],
@@ -74,46 +91,46 @@ const faqSchema = {
 
 const services = [
   {
+    title: 'Reinforcement Learning & Embodied AI',
+    description: 'RL policies for physical systems: dexterous manipulation, sim-to-real transfer, policy robustness. Isaac Lab, Gazebo, ROS.',
+  },
+  {
+    title: 'Scientific ML',
+    description: 'Neural surrogates for expensive simulations, and forecasting on physical and geophysical time series under sparse observation.',
+  },
+  {
+    title: 'Causal Inference & Experimentation',
+    description: 'A/B testing infrastructure and causal-inference systems that measure what an algorithmic intervention was actually worth.',
+  },
+  {
     title: 'Agentic AI Systems',
-    description: 'LLM-powered autonomous agents that plan, reason, use tools, and execute complex workflows.',
+    description: 'LLM-powered agents that plan, reason, use tools, and execute multi-step workflows — with evaluation built in, not bolted on.',
   },
   {
-    title: 'AI Product Development',
-    description: 'LLM-powered products end-to-end: architecture, development, deployment. The whole thing, ready for real users.',
-  },
-  {
-    title: 'MLOps & LLMOps',
-    description: 'Production ML pipelines, model fine-tuning, inference optimization, and automated operations at scale.',
-  },
-  {
-    title: 'Search & RAG Systems',
-    description: 'Production search engines, RAG pipelines, and vector databases that ground LLMs in your domain data.',
+    title: 'Search & Retrieval',
+    description: 'Production search and ranking serving millions of users, plus RAG pipelines that ground LLMs in your domain data.',
   },
   {
     title: 'Computer Vision',
-    description: 'Custom deep learning models for detection, segmentation, and visual understanding.',
-  },
-  {
-    title: 'GenAI Strategy & Consulting',
-    description: 'Senior-level AI leadership. GenAI strategy, LLM evaluation, governance, and enterprise AI transformation.',
+    description: 'Custom deep learning models for detection, classification, segmentation, and visual understanding.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Anton Nikolaev — Principal AI Engineer | Agentic AI, LLM, GenAI, MLOps"
-  description="Principal AI Engineer specializing in agentic AI, generative AI product development, LLM fine-tuning, MLOps, NLP, RAG, computer vision, and GenAI strategy consulting. Book a free consultation."
+  title="Anton Nikolaev — Principal ML Scientist | RL, Scientific ML, Causal Inference"
+  description="Principal ML Scientist with 10+ years bridging research and production: reinforcement learning for embodied AI, scientific ML and surrogate modeling, causal inference, agentic LLM systems, and search at scale. Published in Nature Communications, IEEE, and AAAI."
   schemas={[personSchema, websiteSchema, faqSchema]}
 >
   <!-- Hero -->
   <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-20 sm:pt-24 sm:pb-28">
     <div class="max-w-3xl">
-      <p class="text-primary font-semibold mb-3">Principal AI Engineer</p>
+      <p class="text-primary font-semibold mb-3">Principal ML Scientist</p>
       <h1 class="text-4xl sm:text-5xl font-bold text-text leading-tight mb-6">
         I turn <span class="text-primary">research into deployed AI</span>
       </h1>
       <p class="text-lg text-text-muted leading-relaxed mb-8 max-w-2xl">
-        Computer scientist with a math and physics background. I've spent the last decade building ML systems — from search engines serving millions of users to agentic workflows for data analysis. I work across the full stack, from experiment design to production.
+        Ten-plus years bridging research and production, across deep learning, reinforcement learning, and scientific ML. I've built search serving millions of shoppers, a climate surrogate that matched dynamical forecast models at a fraction of their cost, and manipulation policies for embodied AI in simulation. Mathematics and physics underneath; production systems on top.
       </p>
       <div class="flex flex-col sm:flex-row gap-4">
         <a
@@ -123,83 +140,106 @@ const services = [
           Book a Free Call
         </a>
         <a
-          href="/services"
+          href="/about"
           class="inline-flex items-center justify-center border border-border text-text px-6 py-3 rounded-lg font-medium hover:bg-surface transition-colors"
         >
-          View Services
+          Read the CV
         </a>
       </div>
     </div>
   </section>
 
-  <!-- What I Do -->
+  <!-- Selected results -->
   <section class="bg-surface py-16 sm:py-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl font-bold text-text mb-4">What I Do</h2>
-      <p class="text-text-muted mb-10 max-w-2xl">
-        I work across the full AI stack — from research and prototyping to production deployment and operations.
-      </p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service) => (
-          <a href="/services" class="group bg-white rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
-            <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-            <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
-          </a>
-        ))}
+      <h2 class="text-3xl font-bold text-text mb-10">Selected Results</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="text-3xl font-bold text-primary mb-2">1,000,000&#215;</p>
+          <p class="text-sm text-text-muted leading-relaxed">Speedup over classical differential-equation solvers for galactic cosmic ray intensity, with the numerical instabilities removed.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="text-3xl font-bold text-primary mb-2">30%</p>
+          <p class="text-sm text-text-muted leading-relaxed">Lift in mobile search engagement at Saks Fifth Avenue, measured by A/B test on autocomplete I owned end-to-end.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="text-3xl font-bold text-primary mb-2">6 TB/day</p>
+          <p class="text-sm text-text-muted leading-relaxed">Ingest of the "Data Vault" platform whose core components I architected — the single source of truth for experimentation and analytics.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-border">
+          <p class="text-3xl font-bold text-primary mb-2">56<span class="text-xl">th</span></p>
+          <p class="text-sm text-text-muted leading-relaxed">Globally, among 160+ specialized teams in Alphabet's Intrinsic AI for Industry Challenge on robotic wiring assembly.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Section (AIEO optimized) -->
+  <!-- What I Do -->
   <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <h2 class="text-3xl font-bold text-text mb-10">Frequently Asked Questions</h2>
-    <div class="space-y-6 max-w-3xl">
-      <div>
-        <h3 class="font-semibold text-text mb-2">What are agentic AI systems?</h3>
-        <p class="text-text-muted leading-relaxed">
-          Agentic AI systems are autonomous programs that can plan, reason, use tools, and take actions to accomplish complex goals. Unlike simple chatbots, they maintain state, break down tasks, and iteratively work toward objectives — making them ideal for workflow automation, research assistance, and decision support.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-semibold text-text mb-2">What is RAG and why does it matter?</h3>
-        <p class="text-text-muted leading-relaxed">
-          Retrieval-Augmented Generation (RAG) is an architecture that connects large language models to your private data — documents, databases, APIs — so they can provide accurate, grounded answers instead of hallucinating. RAG is essential for enterprise AI applications where factual accuracy is critical.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-semibold text-text mb-2">What is MLOps and why do I need it?</h3>
-        <p class="text-text-muted leading-relaxed">
-          MLOps (Machine Learning Operations) brings DevOps practices to ML — automated training pipelines, model versioning, monitoring, and deployment. Without MLOps, models degrade silently in production. With it, you get reproducible, reliable AI systems that improve over time.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-semibold text-text mb-2">How much does an AI consulting engagement cost?</h3>
-        <p class="text-text-muted leading-relaxed">
-          Engagements vary based on scope and complexity. I offer a free initial consultation to understand your needs and provide an estimate. <a href="/book" class="text-primary hover:underline">Book a call</a> to discuss your specific use case and budget.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-semibold text-text mb-2">How do I book a consultation?</h3>
-        <p class="text-text-muted leading-relaxed">
-          You can <a href="/book" class="text-primary hover:underline">book a free call</a> directly on this website. Choose a time that works for you and I'll reach out with a video call link.
-        </p>
+    <h2 class="text-3xl font-bold text-text mb-4">What I Do</h2>
+    <p class="text-text-muted mb-10 max-w-2xl">
+      I work across the full stack — from research and experiment design to production deployment and operations.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((service) => (
+        <a href="/services" class="group bg-surface rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
+          <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+          <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ Section (AIEO optimized) -->
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-text mb-10">Frequently Asked Questions</h2>
+      <div class="space-y-6 max-w-3xl">
+        <div>
+          <h3 class="font-semibold text-text mb-2">What kind of ML work do you take on?</h3>
+          <p class="text-text-muted leading-relaxed">
+            Problems where the modeling is the hard part: reinforcement learning and policies for physical systems, surrogate models for expensive simulations, causal inference and experiment design, and agentic LLM systems that have to be evaluated rather than demoed. I work from problem framing through to a system running in production.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-2">What is a surrogate model and when is it worth building?</h3>
+          <p class="text-text-muted leading-relaxed">
+            A surrogate model is a neural network trained to approximate an expensive physical simulation or numerical solver. It's worth building when you need to run the simulation many times — for forecasting, optimization, or control — and the solver is too slow. Well-built surrogates can be orders of magnitude faster than what they replace while staying within a few percent of it.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-2">What does sim-to-real transfer mean in robot learning?</h3>
+          <p class="text-text-muted leading-relaxed">
+            Sim-to-real transfer is the practice of training a control policy in simulation, where data is cheap and failures are free, then getting it to work on real hardware. The gap is closed with domain randomization, careful reward and observation design, and robustness testing — the policy has to survive physics the simulator never modeled.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-2">Why does causal inference matter for ML teams?</h3>
+          <p class="text-text-muted leading-relaxed">
+            Predictive accuracy tells you what will happen; causal inference tells you what happens if you intervene. Product and business decisions are interventions, so measuring their effect needs experimental design and causal methods, not just model metrics. Without that framework, teams ship models and can't say what they were worth.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-text mb-2">How do I book a consultation?</h3>
+          <p class="text-text-muted leading-relaxed">
+            You can <a href="/book" class="text-primary hover:underline">book a free call</a> directly on this website. Choose a time that works for you and I'll reach out with a video call link.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="bg-surface py-16 sm:py-20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-3xl font-bold text-text mb-4">Have a problem that needs ML?</h2>
-      <p class="text-text-muted mb-8 max-w-xl mx-auto">
-        Let's talk. 30 minutes, no pitch — just an honest conversation about whether AI can actually help.
-      </p>
-      <a
-        href="/book"
-        class="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors"
-      >
-        Book a Free Call
-      </a>
-    </div>
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+    <h2 class="text-3xl font-bold text-text mb-4">Have a problem that needs ML?</h2>
+    <p class="text-text-muted mb-8 max-w-xl mx-auto">
+      Let's talk. 30 minutes, no pitch — just an honest conversation about whether machine learning can actually help.
+    </p>
+    <a
+      href="/book"
+      class="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary-dark transition-colors"
+    >
+      Book a Free Call
+    </a>
   </section>
 </BaseLayout>

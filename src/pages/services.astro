@@ -7,14 +7,38 @@ const serviceSchema = {
   provider: {
     '@type': 'Person',
     name: 'Anton Nikolaev',
-    url: 'https://alestainer.github.io',
+    url: 'https://alestainer.com',
   },
-  serviceType: 'AI & Machine Learning Consulting',
+  serviceType: 'Machine Learning Research & Engineering Consulting',
   areaServed: 'Worldwide',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'AI Engineering Services',
+    name: 'ML Research & Engineering Services',
     itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Reinforcement Learning & Embodied AI',
+          description: 'RL policies for physical systems: dexterous manipulation, sim-to-real transfer, and policy robustness in NVIDIA Isaac Lab and Gazebo.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Scientific ML & Surrogate Modeling',
+          description: 'Neural surrogates for expensive physical simulations, and forecasting on climate and geophysical time series under sparse observation.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Causal Inference & Experimentation',
+          description: 'A/B testing infrastructure, causal-inference systems, and evaluation design for research-to-production transitions.',
+        },
+      },
       {
         '@type': 'Offer',
         itemOffered: {
@@ -71,12 +95,47 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.github.io' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://alestainer.github.io/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alestainer.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://alestainer.com/services' },
   ],
 };
 
 const services = [
+  {
+    title: 'Reinforcement Learning & Embodied AI',
+    description: 'Learned policies for physical systems. I write and train policies in simulation and drive them toward hardware — vision-sensory-motor control for dexterous manipulation, with robustness treated as the deliverable rather than an afterthought.',
+    capabilities: [
+      'RL policy design and training for manipulation and locomotion',
+      'Vision-sensory-motor policies for dexterous tasks',
+      'Sim-to-real transfer and domain randomization',
+      'NVIDIA Isaac Lab, Gazebo, and ROS pipelines',
+      'Policy robustness evaluation and failure analysis',
+      'Motion retargeting and imitation from recorded human motion',
+    ],
+  },
+  {
+    title: 'Scientific ML & Surrogate Modeling',
+    description: 'Neural surrogates for simulations that are too expensive to run as often as you need them, and forecasting on physical systems where the observations are sparse and irregular.',
+    capabilities: [
+      'Surrogate models for numerical solvers and physical simulations',
+      'Climate and geophysical time-series forecasting',
+      'Forecasting under sparse and irregular observation',
+      'Architecture search via Bayesian optimization',
+      'Multi-GPU and HPC training (Slurm)',
+      'Benchmarking against dynamical and persistence baselines',
+    ],
+  },
+  {
+    title: 'Causal Inference & Experimentation',
+    description: 'Model metrics tell you the model got better. Causal inference tells you the business did. I build the experimentation and causal machinery that connects the two, and the statistical framework teams actually adopt.',
+    capabilities: [
+      'A/B testing infrastructure and experiment design',
+      'Causal-inference systems for measuring algorithmic interventions',
+      'Quasi-experimental methods where randomization is not possible',
+      'Evaluation design for research-to-production transitions',
+      'Statistical frameworks for cross-functional decision-making',
+    ],
+  },
   {
     title: 'Agentic Systems Design & Development',
     description: 'I build LLM-powered agents that plan, reason, use tools, and execute multi-step workflows. Internal tools, research assistants, customer-facing agents. Reliable and observable.',
@@ -143,7 +202,6 @@ const services = [
       'LLM evaluation, vendor and model selection',
       'Enterprise AI architecture design and review',
       'AI governance and risk frameworks',
-      'Causal inference and experimentation design',
       'Proof-of-concept development and team capability building',
     ],
   },
@@ -151,8 +209,8 @@ const services = [
 ---
 
 <BaseLayout
-  title="AI Engineering Services — Agentic AI, LLM Development, MLOps, RAG | Anton Nikolaev"
-  description="Expert AI consulting: agentic systems, generative AI product development, LLM fine-tuning, MLOps, RAG pipelines, NLP, computer vision, and GenAI strategy. Book a free consultation."
+  title="Services — RL & Embodied AI, Scientific ML, Causal Inference, Agentic Systems | Anton Nikolaev"
+  description="ML research and engineering consulting: reinforcement learning for embodied AI, scientific ML and surrogate modeling, causal inference and experimentation, agentic LLM systems, search and RAG, and computer vision. Book a free consultation."
   schemas={[serviceSchema, breadcrumbSchema]}
 >
   <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-12 sm:pt-24 sm:pb-16">
@@ -163,10 +221,10 @@ const services = [
     </nav>
 
     <h1 class="text-4xl sm:text-5xl font-bold text-text mb-6">
-      AI Engineering Services
+      Services
     </h1>
     <p class="text-lg text-text-muted leading-relaxed max-w-2xl mb-16">
-      I help teams build, deploy, and operate AI systems, from early-stage prototypes to production-grade infrastructure. Every engagement starts with understanding your problem.
+      I work on problems where the modeling is the hard part — learned policies for physical systems, surrogates for expensive simulations, causal measurement, and LLM systems that have to survive evaluation. Research through to production. Every engagement starts with understanding your problem.
     </p>
 
     <div class="space-y-12">
