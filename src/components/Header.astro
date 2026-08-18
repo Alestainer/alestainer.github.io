@@ -12,7 +12,28 @@ const currentPath = Astro.url.pathname;
 
 <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
   <nav class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-xl font-bold text-text hover:text-primary transition-colors">
+    <a href="/" class="group flex items-center gap-2.5 text-xl font-bold text-text hover:text-primary transition-colors">
+      <svg
+        class="w-7 h-7 shrink-0"
+        viewBox="20 30 220 210"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="9"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <mask id="logo-slab-cut">
+          <rect width="260" height="250" fill="#fff" />
+          <path d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z" fill="#000" />
+        </mask>
+        <g mask="url(#logo-slab-cut)">
+          <path d="M108 70 L44 220" />
+          <path d="M65 178 L165 178" />
+        </g>
+        <path d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z" />
+        <path d="M108 70 L142 90 L200 64 M142 90 L172 222" />
+      </svg>
       Anton Nikolaev
     </a>
 

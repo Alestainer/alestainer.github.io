@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 30 220 210" width="220" height="210" role="img" aria-label="A monogram">
+  <mask id="slab-cut">
+    <rect x="0" y="0" width="260" height="250" fill="#fff"/>
+    <path d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z" fill="#000"/>
+  </mask>
+  <g fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <g mask="url(#slab-cut)">
+      <path d="M108 70 L44 220"/>
+      <path d="M65 178 L165 178"/>
+    </g>
+    <path d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z"/>
+    <path d="M108 70 L142 90 L200 64 M142 90 L172 222"/>
+  </g>
+</svg>
