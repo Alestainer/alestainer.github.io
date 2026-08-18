@@ -1,0 +1,8 @@
+site: alestainer.com
+name: Anton Nikolaev
+role: AI Scientist & Engineer
+purpose: Personal website and AI engineering consulting services
+expertise: agentic AI systems, incentive design for AI, MLOps, AIOps, computer vision, retrieval-augmented generation (RAG), machine learning
+services: AI consulting, agentic systems design, MLOps implementation, RAG system development, computer vision solutions, AI strategy
+booking: https://alestainer.com/book
+blog: https://alestainer.com/blog
