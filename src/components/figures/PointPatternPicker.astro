@@ -130,22 +130,18 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         <p class="mt-4 rounded-lg bg-[var(--color-surface)] p-4">
           Anything but 100% here I would count as a failure. That is what understanding a concept
           means rather than guessing at it: once you have it, you apply it consistently. Every human
-          who is taught this rule can then get 20 out of 20. <em>New pair</em> deals another one.
+          who is taught this rule can then get 20 out of 20.
         </p>
         <p class="mt-3">
           Reading their answers, the models have the correct reasoning but fail to apply it robustly
           in practice when looking at images.
         </p>
-        <p class="mt-3 text-xs text-[var(--color-text-muted)]">
-          20 images, identical for every model, generated from a fixed seed.
-        </p>
       </div>
 
-      <p class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-relaxed text-[var(--color-text-muted)]">
-        <a href="https://colab.research.google.com/github/Alestainer/statistics-intuitions/blob/main/notebooks/01-which-map-is-random.ipynb" target="_blank" rel="noopener" class="inline-flex shrink-0">
+      <p class="mt-3">
+        <a href="https://colab.research.google.com/github/Alestainer/statistics-intuitions/blob/main/notebooks/01-which-map-is-random.ipynb" target="_blank" rel="noopener" class="inline-flex">
           <img src="/img/colab-badge.svg" alt="Open the reproduction notebook in Google Colab" width="117" height="20" loading="lazy" decoding="async" />
         </a>
-        <span>Regenerates these exact patterns from the seed above and reruns the same test. Nothing to install.</span>
       </p>
     </div>
 
