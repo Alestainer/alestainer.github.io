@@ -126,36 +126,18 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         <p class="mt-2">
           The same 20 images, put to the top reasoning model from each of six labs. Chance is 50%.
         </p>
-        <div class="mt-3 overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead>
-              <tr class="border-b border-[var(--color-border)] text-[var(--color-text-muted)]">
-                <th class="py-1 pr-3 font-medium">Model</th>
-                <th class="py-1 pr-3 font-medium text-right">Correct</th>
-                <th class="py-1 font-medium text-right">Accuracy</th>
-              </tr>
-            </thead>
-            <tbody class="font-mono text-xs sm:text-sm">
-              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">gemini-3.7-flash</td><td class="py-1 pr-3 text-right">20/20</td><td class="py-1 text-right font-semibold">100%</td></tr>
-              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">gpt-5.6-sol</td><td class="py-1 pr-3 text-right">19/20</td><td class="py-1 text-right">95%</td></tr>
-              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">qwen3.8-max</td><td class="py-1 pr-3 text-right">19/20</td><td class="py-1 text-right">95%</td></tr>
-              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">claude-opus-5</td><td class="py-1 pr-3 text-right">18/20</td><td class="py-1 text-right">90%</td></tr>
-              <tr class="border-b border-[var(--color-border)]"><td class="py-1 pr-3">kimi-k3</td><td class="py-1 pr-3 text-right">18/20</td><td class="py-1 text-right">90%</td></tr>
-              <tr><td class="py-1 pr-3">claude-sonnet-5</td><td class="py-1 pr-3 text-right">17/20</td><td class="py-1 text-right">85%</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <canvas class="ppp-evalchart mt-3 block w-full h-auto" width="600" height="220"></canvas>
         <p class="mt-4 rounded-lg bg-[var(--color-surface)] p-4">
           Anything but 100% here I would count as a failure. That is what understanding a concept
           means rather than guessing at it: once you have it, you apply it consistently. Every human
-          who is taught this rule can then get 20 out of 20. If you do not believe me, do 20 rounds
-          yourself after reading the explanation above &mdash; press <em>New pair</em> and keep score.
+          who is taught this rule can then get 20 out of 20. <em>New pair</em> deals another one.
+        </p>
+        <p class="mt-3">
+          Reading their answers, the models have the correct reasoning but fail to apply it robustly
+          in practice when looking at images.
         </p>
         <p class="mt-3 text-xs text-[var(--color-text-muted)]">
-          20 images, identical for every model, generated from a fixed seed. Run it with your own key:
-          <a class="text-[var(--color-primary)] underline" href="https://github.com/Alestainer/statistics-intuitions/tree/main/evals" target="_blank" rel="noopener">evals/</a>.
-          Every individual answer is recorded in
-          <a class="text-[var(--color-primary)] underline" href="https://github.com/Alestainer/statistics-intuitions/tree/main/evals/results/which-map-is-random" target="_blank" rel="noopener">results/</a>.
+          20 images, identical for every model, generated from a fixed seed.
         </p>
       </div>
 
@@ -178,6 +160,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
   import {
     cellCounts, countHistogram, poissonExpected, varianceMeanRatio, drawGrid, drawHistogram,
   } from './lib/pointstats';
+  import { drawModelScores } from './lib/evalchart';
 
   const GRID_K = 10; // 100 cells; with n=120 that is lambda = 1.2, close to Clarke's 0.93
 
@@ -234,7 +217,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
     const pad = S * 0.04;
     const inner = S - pad * 2;
     const rad = Math.max(2, S * 0.0075);
-    if (showGrid) drawGrid(ctx, S, pad, GRID_K);
+    if (showGrid) drawGrid(ctx, S, pad, GRID_K, 'rgba(37, 99, 235, 0.28)');
     ctx.fillStyle = '#111111';
     for (const [x, y] of pts) {
       ctx.beginPath();
@@ -327,7 +310,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         vmrs.push(v);
         const isRandom = idx === this.randomIndex;
         drawHistogram(hists[idx], observed, expected, {
-          barColor: isRandom ? '#111111' : '#bbbbbb',
+          barColor: isRandom ? '#2563eb' : '#9ca3af',
         });
         vmrEls[idx].innerHTML =
           `${idx === 0 ? 'A' : 'B'} &middot; variance / mean = <strong>${v.toFixed(2)}</strong>`;
@@ -343,6 +326,18 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         `dashed line. <strong>${oName}</strong> comes out at <strong>${vmrs[oIdx].toFixed(2)}</strong> \u2014 too few ` +
         `empty cells and too few crowded ones. That gap is the whole illusion: the random pattern has ` +
         `<em>more</em> empty space and <em>more</em> crowding than the one that looks random.`;
+
+      const chart = this.querySelector('canvas.ppp-evalchart') as HTMLCanvasElement | null;
+      if (chart) {
+        drawModelScores(chart, [
+          { label: 'gemini-3.7-flash', correct: 20, n: 20 },
+          { label: 'gpt-5.6-sol',      correct: 19, n: 20 },
+          { label: 'qwen3.8-max',      correct: 19, n: 20 },
+          { label: 'claude-opus-5',    correct: 18, n: 20 },
+          { label: 'kimi-k3',          correct: 18, n: 20 },
+          { label: 'claude-sonnet-5',  correct: 17, n: 20 },
+        ]);
+      }
 
       const te = this.querySelector('.ppp-theory-exact') as HTMLElement | null;
       if (te) te.textContent = `1 - 1/${nCells} = ${theory.toFixed(2)}`;
