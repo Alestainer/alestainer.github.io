@@ -72,6 +72,13 @@ In `~/mvps/statistics-intuitions/notebooks/NN-slug.ipynb`. It must:
   `assert` the port matches known JS output. Statistically-similar is not reproduction.
 - Print the same numbers the article states.
 - Keep dependencies minimal — standard library for the statistics, `matplotlib` only for plots.
+  Everything must be preinstalled in Colab; no `pip install` cell.
+- **Open in Colab in one click.** Official link format:
+  `https://colab.research.google.com/github/{owner}/{repo}/blob/{branch}/{path}`, with Google's badge
+  `https://colab.research.google.com/assets/colab-badge.svg` in the notebook's first cell and the
+  README. A reader who has to install Jupyter will not check your work.
+- **Commit executed outputs** so the numbers and figure show on GitHub without running:
+  `uv run --with nbconvert --with matplotlib --with ipykernel python -m nbconvert --to notebook --execute --inplace <nb>`
 - Add a row to the repo README table.
 
 ### 5. The article
