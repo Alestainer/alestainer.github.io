@@ -81,9 +81,26 @@ In `~/mvps/statistics-intuitions/notebooks/NN-slug.ipynb`. It must:
   `uv run --with nbconvert --with matplotlib --with ipykernel python -m nbconvert --to notebook --execute --inplace <nb>`
 - Add a row to the repo README table.
 
-### 5. The article
+### 5. The LLM eval
 
-`.mdx` in `src/content/blog/`. Must contain all five contract elements (§42):
+Put the same question to the models, with the same stimuli, in
+`~/mvps/statistics-intuitions/evals/`. Add a module to `tasks/` exposing a `TASK`.
+
+**Do not report accuracy on its own.** A model answering one side every time scores ~50% on a
+balanced set, which looks exactly like a coin flip. Pair every trial with a control that isolates
+the shortcut — a left-right mirror for positional questions, a relabelling for A/B ones. That
+separates answering by position (0.50 accuracy, 100% position-locked) from reading correctly (1.00)
+from **reading it and sharing the human bias** (0.00 accuracy, 100% pattern-consistent). The last
+is the result worth having.
+
+```bash
+python evals/run.py --task <slug> --models available --n 20
+python evals/report.py --task <slug>
+```
+
+### 6. The article
+
+`.mdx` in `src/content/blog/`. Must contain all six contract elements (§42), including the eval table:
 
 1. interactive figure
 2. primary source, linked **by its title** — never "read it here" or "click for PDF"
@@ -95,7 +112,7 @@ State the **exact** theory value, not the famous one — the famous number is us
 check whether your setup is in it. Say plainly when no closed form exists; naming the gap beats
 inventing rigour.
 
-### 6. Ship
+### 7. Ship
 
 - `npm run build` clean
 - `noindex` anything under `/lab/`
