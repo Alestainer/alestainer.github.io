@@ -107,10 +107,14 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       </details>
 
       <p class="mt-4 text-xs leading-relaxed text-[var(--color-text-muted)]">
-        Method: R. D. Clarke, &ldquo;An Application of the Poisson Distribution&rdquo;,
-        <em>Journal of the Institute of Actuaries</em> <strong>72</strong> (1946), p.&nbsp;481 &mdash;
-        <a class="text-[var(--color-primary)] underline" href="https://garcialab.berkeley.edu/courses/papers/Clarke1946.pdf" target="_blank" rel="noopener">read it (PDF, one page)</a>.
+        Method: R. D. Clarke,
+        <a class="text-[var(--color-primary)] underline" href="https://garcialab.berkeley.edu/courses/papers/Clarke1946.pdf" target="_blank" rel="noopener">&ldquo;An Application of the Poisson Distribution&rdquo;</a>,
+        <em>Journal of the Institute of Actuaries</em> <strong>72</strong> (1946), p.&nbsp;481.
         Clarke divided 144&nbsp;km&sup2; of south London into 576 quarter-km squares and counted V-1 impacts per square.
+      </p>
+      <p class="mt-2 text-xs leading-relaxed text-[var(--color-text-muted)]">
+        <a class="text-[var(--color-primary)] underline" href="https://github.com/Alestainer/statistics-intuitions/blob/main/notebooks/01-which-map-is-random.ipynb" target="_blank" rel="noopener">Reproduction notebook</a>
+        &mdash; regenerates these exact patterns from the seed above and runs the same test.
       </p>
     </div>
 
