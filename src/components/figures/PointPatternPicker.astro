@@ -46,6 +46,72 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         </div>
       </div>
       <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></p>
+
+      <div class="mt-5 text-sm leading-relaxed text-[var(--color-text)]">
+        <p class="font-medium">Why the two histograms have different shapes</p>
+        <p class="mt-2">
+          Both squares hold exactly the same number of dots, so both histograms have the same
+          <em>average</em> dots per cell. What differs is the <em>spread</em>. Scattering points independently
+          means nothing stops two of them landing in the same cell, so some cells end up crowded &mdash; and
+          because the dots are used up elsewhere, others end up empty. Enforcing a minimum distance removes
+          the crowded cells, and removing them removes the empty ones too. The bars pull in toward the
+          middle from both ends at once.
+        </p>
+        <p class="mt-2">
+          So the histogram is a picture of the variance. Chance is the <em>wider</em> one.
+        </p>
+      </div>
+
+      <details class="ppp-math mt-4 rounded-lg border border-[var(--color-border)] p-4 text-sm leading-relaxed">
+        <summary class="cursor-pointer font-medium text-[var(--color-primary)]">Show the maths</summary>
+        <div class="mt-3 space-y-3 text-[var(--color-text)]">
+          <p>
+            <strong>Why chance gives a ratio of one.</strong> Drop <em>N</em> points independently and uniformly
+            into <em>M</em> equal cells. Each point lands in a given cell with probability 1/<em>M</em>,
+            independently of the others, so the count in that cell is Binomial(<em>N</em>, 1/<em>M</em>):
+          </p>
+          <p class="font-mono text-xs sm:text-sm">
+            mean = N/M = &lambda; &nbsp;&nbsp;&nbsp; variance = N &middot; (1/M) &middot; (1 &minus; 1/M) = &lambda;(1 &minus; 1/M)
+          </p>
+          <p>
+            so the ratio is exactly <span class="font-mono">1 &minus; 1/M</span> &mdash; <span class="ppp-theory-exact font-mono"></span>
+            here. As <em>M</em> and <em>N</em> grow with &lambda; fixed, the Binomial converges to Poisson(&lambda;),
+            whose mean and variance are both &lambda;. That limit is why the dashed line is a Poisson curve and why
+            the ratio is called one.
+          </p>
+          <p>
+            <strong>Why a minimum distance pushes it below one.</strong> This part is exact too. For a stationary
+            point process, the variance of the count in a region <em>W</em> is
+          </p>
+          <p class="font-mono text-xs sm:text-sm">
+            Var[N(W)] = &lambda;|W| + &lambda;&sup2; &int;&int; [ g(x&minus;y) &minus; 1 ] dx dy
+          </p>
+          <p>
+            where <em>g</em> is the pair correlation function &mdash; how much more or less likely you are to find
+            a second point at distance <em>r</em> from a given one, compared to chance. For a Poisson process
+            <span class="font-mono">g &equiv; 1</span>, the integral vanishes, and variance equals the mean.
+          </p>
+          <p>
+            A hard-core process forbids pairs closer than <em>d</em>, so <span class="font-mono">g(r) = 0</span> for
+            <span class="font-mono">r &lt; d</span>. Over that range the bracket is <span class="font-mono">&minus;1</span>,
+            the integral is strictly negative, and the variance drops below the mean. The size of the hole in
+            <em>g</em> is the size of the deficit &mdash; which is why raising <em>d</em> pushes the ratio further
+            below one, and why the histogram narrows.
+          </p>
+          <p class="text-[var(--color-text-muted)]">
+            No corresponding closed form exists for the <em>mean</em> nearest-neighbour spacing of this process:
+            points are laid down one at a time and rejected on collision, so the density it reaches has no exact
+            expression and is estimated numerically.
+          </p>
+        </div>
+      </details>
+
+      <p class="mt-4 text-xs leading-relaxed text-[var(--color-text-muted)]">
+        Method: R. D. Clarke, &ldquo;An Application of the Poisson Distribution&rdquo;,
+        <em>Journal of the Institute of Actuaries</em> <strong>72</strong> (1946), p.&nbsp;481 &mdash;
+        <a class="text-[var(--color-primary)] underline" href="https://garcialab.berkeley.edu/courses/papers/Clarke1946.pdf" target="_blank" rel="noopener">read it (PDF, one page)</a>.
+        Clarke divided 144&nbsp;km&sup2; of south London into 576 quarter-km squares and counted V-1 impacts per square.
+      </p>
     </div>
 
     <div class="mt-4 flex items-center justify-center gap-3 text-xs text-[var(--color-text-muted)]">
@@ -194,6 +260,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       const lambda = this.n / nCells;
       const maxBin = 4;
       const expected = poissonExpected(lambda, nCells, maxBin);
+      const theory = 1 - 1 / nCells;
 
       const hists = this.querySelectorAll<HTMLCanvasElement>('canvas.ppp-hist');
       const vmrEls = this.querySelectorAll<HTMLElement>('.ppp-vmr');
@@ -218,11 +285,14 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
       const rName = rIdx === 0 ? 'A' : 'B';
       const oName = oIdx === 0 ? 'A' : 'B';
       (this.querySelector('.ppp-verdict') as HTMLElement).innerHTML =
-        `Pure chance gives a variance-to-mean ratio of <strong>1.00</strong>. ` +
+        `Pure chance gives a variance-to-mean ratio of <strong>${theory.toFixed(2)}</strong> here (exactly 1 &minus; 1/${nCells}). ` +
         `<strong>${rName}</strong> comes out at <strong>${vmrs[rIdx].toFixed(2)}</strong> and its bars sit on the ` +
         `dashed line. <strong>${oName}</strong> comes out at <strong>${vmrs[oIdx].toFixed(2)}</strong> \u2014 too few ` +
         `empty cells and too few crowded ones. That gap is the whole illusion: the random pattern has ` +
         `<em>more</em> empty space and <em>more</em> crowding than the one that looks random.`;
+
+      const te = this.querySelector('.ppp-theory-exact') as HTMLElement | null;
+      if (te) te.textContent = `1 - 1/${nCells} = ${theory.toFixed(2)}`;
 
       (this.querySelector('.ppp-analysis') as HTMLElement).classList.remove('hidden');
     }
