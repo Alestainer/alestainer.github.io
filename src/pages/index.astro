@@ -149,50 +149,26 @@ const services = [
     </div>
   </section>
 
-  <!-- Selected results -->
+  <!-- What I Do -->
   <section class="bg-surface py-16 sm:py-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl font-bold text-text mb-10">Selected Results</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white rounded-xl p-6 border border-border">
-          <p class="text-3xl font-bold text-primary mb-2">1,000,000&#215;</p>
-          <p class="text-sm text-text-muted leading-relaxed">Speedup over classical differential-equation solvers for galactic cosmic ray intensity, with the numerical instabilities removed.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-border">
-          <p class="text-3xl font-bold text-primary mb-2">30%</p>
-          <p class="text-sm text-text-muted leading-relaxed">Lift in mobile search engagement at Saks Fifth Avenue, measured by A/B test on autocomplete I owned end-to-end.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-border">
-          <p class="text-3xl font-bold text-primary mb-2">6 TB/day</p>
-          <p class="text-sm text-text-muted leading-relaxed">Ingest of the "Data Vault" platform whose core components I architected — the single source of truth for experimentation and analytics.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 border border-border">
-          <p class="text-3xl font-bold text-primary mb-2">56<span class="text-xl">th</span></p>
-          <p class="text-sm text-text-muted leading-relaxed">Globally, among 160+ specialized teams in Alphabet's Intrinsic AI for Industry Challenge on robotic wiring assembly.</p>
-        </div>
+      <h2 class="text-3xl font-bold text-text mb-4">What I Do</h2>
+      <p class="text-text-muted mb-10 max-w-2xl">
+        I work across the full stack — from research and experiment design to production deployment and operations.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service) => (
+          <a href="/services" class="group bg-white rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
+            <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+            <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- What I Do -->
-  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <h2 class="text-3xl font-bold text-text mb-4">What I Do</h2>
-    <p class="text-text-muted mb-10 max-w-2xl">
-      I work across the full stack — from research and experiment design to production deployment and operations.
-    </p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map((service) => (
-        <a href="/services" class="group bg-surface rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-sm transition-all">
-          <h3 class="font-semibold text-text mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-          <p class="text-sm text-text-muted leading-relaxed">{service.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
-
   <!-- FAQ Section (AIEO optimized) -->
-  <section class="bg-surface py-16 sm:py-20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
       <h2 class="text-3xl font-bold text-text mb-10">Frequently Asked Questions</h2>
       <div class="space-y-6 max-w-3xl">
         <div>
@@ -226,11 +202,11 @@ const services = [
           </p>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- CTA -->
-  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
     <h2 class="text-3xl font-bold text-text mb-4">Have a problem that needs ML?</h2>
     <p class="text-text-muted mb-8 max-w-xl mx-auto">
       Let's talk. 30 minutes, no pitch — just an honest conversation about whether machine learning can actually help.
@@ -241,5 +217,6 @@ const services = [
     >
       Book a Free Call
     </a>
+    </div>
   </section>
 </BaseLayout>
