@@ -26,3 +26,4 @@ pnpm-debug.log*
 
 # codex worktree artifacts
 .claude/worktrees/
+.gstack/
