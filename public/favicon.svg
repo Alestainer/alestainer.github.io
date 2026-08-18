@@ -1,18 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#000"/>
-  <g transform="translate(-1.125 -0.625) scale(0.125)">
-    <mask id="slab-cut">
-      <rect width="260" height="250" fill="#fff"/>
-      <path d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z" fill="#000"/>
-    </mask>
-    <g mask="url(#slab-cut)" fill="none" stroke="#fff" stroke-width="18" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M108 70 L44 220"/>
-      <path d="M65 178 L165 178"/>
+  <g transform="translate(0.79 2.01) scale(0.1021)">
+    <g fill="none" stroke="#fff" stroke-width="17.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M110 57 L35 237"/>
+      <path d="M58 182 L162 182"/>
     </g>
-    <path fill="#fff" d="M108 70 L166 44 L200 64 L230 196 L172 222 L138 202 Z"/>
+    <path fill="#fff" d="M110 57 L140 31 L188 37 L263 217 L233 243 L185 237 Z"/>
     <g fill="none" stroke="#000" stroke-width="13" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M108 70 L142 90 L200 64"/>
-      <path d="M142 90 L172 222"/>
+      <path d="M110 57 L158 63 L188 37"/>
+      <path d="M158 63 L233 243"/>
     </g>
   </g>
 </svg>
