@@ -30,8 +30,9 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
     <div class="ppp-result mt-4 hidden rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></div>
 
     <div class="ppp-analysis mt-6 hidden">
-      <p class="text-sm leading-relaxed text-[var(--color-text)]">
-        Here is how you settle it, using the method R. D. Clarke published in
+      <p class="mt-6 text-base font-semibold text-[var(--color-text)]">How to settle it</p>
+      <p class="mt-2 text-sm leading-relaxed text-[var(--color-text)]">
+        Using the method R. D. Clarke published in
         <strong>one page in 1946</strong>. Divide each square into a grid, count the dots in every cell, and
         compare how often cells hold 0, 1, 2, 3&nbsp;dots to what pure chance predicts (the dashed line).
       </p>
@@ -55,8 +56,8 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         clustering was what randomness looks like.
       </p>
 
-      <div class="mt-5 text-sm leading-relaxed text-[var(--color-text)]">
-        <p class="font-medium">Why the two histograms have different shapes</p>
+      <div class="text-sm leading-relaxed text-[var(--color-text)]">
+        <p class="mt-6 text-base font-semibold text-[var(--color-text)]">Why the two histograms have different shapes</p>
         <p class="mt-2">
           Both squares hold exactly the same number of dots, so both histograms have the same
           <em>average</em> dots per cell. What differs is the <em>spread</em>. Scattering points independently
@@ -121,7 +122,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
         Clarke divided 144&nbsp;km&sup2; of south London into 576 quarter-km squares and counted V-1 impacts per square.
       </p>
       <div class="mt-6 border-t border-[var(--color-border)] pt-5 text-sm leading-relaxed text-[var(--color-text)]">
-        <p class="font-medium">How the models do</p>
+        <p class="mt-6 text-base font-semibold text-[var(--color-text)]" style="margin-top:0">Can AIs solve this correctly?</p>
         <p class="mt-2">
           The same 20 images, put to the top reasoning model from each of six labs. Chance is 50%.
         </p>
