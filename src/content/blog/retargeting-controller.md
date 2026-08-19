@@ -7,26 +7,32 @@ tags: ["side-project", "robotics", "simulation"]
 
 Weekend experiment: what if we can have sort of a universal controller for anything with just a webcam?
 
-Try it: [alestainer.com/retargeting-controller](https://alestainer.com/retargeting-controller/).
+**[Try it in your browser →](https://alestainer.com/retargeting-controller/)**
 
-Your webcam tracks one hand. Seven of the fifteen finger-bend angles get wired to the seven joints of a simulated robot. The wiring starts out random and is not anatomical, but you can drag a row in the table to assign the joints yourself. Press `R` for a fresh random set.
-
-MediaPipe for hand tracking, MuJoCo compiled to WebAssembly for physics, Three.js for the view. Everything runs in the browser; no video leaves your device. Source is public at [github.com/Alestainer/retargeting-controller](https://github.com/Alestainer/retargeting-controller) — issues and pull requests welcome, especially new embodiments and signal filters.
+Your webcam tracks one hand. Seven of the fifteen finger-bend angles get wired to the seven joints of a simulated robot. The wiring starts out random and is not anatomical — but you can drag a row in the table to assign the joints yourself, or press `R` for a fresh random set.
 
 ## What you are looking at
 
-The page is split into two boxes side by side.
+The page is two boxes side by side, with a list underneath.
 
-**Left box: you.** Your webcam picture, with colored lines drawn over your fingers. Nothing is recorded or uploaded — the picture never leaves your computer. Before you press "Enable camera" the box just shows a button.
+- **Left box — you.** Your webcam picture, with colored lines drawn over your fingers. Nothing is recorded or uploaded; the picture never leaves your computer. Until you press *Enable camera*, the box is just a button.
+- **Right box — the robot.** A simulated arm with seven bending points. A small menu switches the shape: a regular arm, or a floppy tentacle.
+- **The list — the wiring.** Seven lines, one per bending point, each naming the finger bend that controls it. Drag one line onto another to trade their pairings.
+- **The colors — the map.** Every pairing has a color, shown both on your finger in the left box and on the robot part in the right box, so you can see which goes with which.
+- **The buttons.** One shuffles every pairing into a fresh random set. The other pauses, freezing the robot so it stops reacting to your hand.
 
-**Right box: the robot.** A drawing of a simulated robot arm with seven bending points. There's a small menu to switch between two shapes: a regular arm, or a floppy tentacle.
+If your hand leaves the frame, the robot stops where it is and waits.
 
-**In between:** an arrow, because your fingers are what move the robot.
+## How it is built
 
-**Below both boxes: the list.** Seven lines, one per bending point of the robot. Each line says "this finger bend controls this part of the robot." The pairings start out random, so bending your index finger might twist the robot's elbow, but you can drag one line onto another to trade them and build the mapping you want.
+| Piece | What does it |
+| --- | --- |
+| Hand tracking | MediaPipe hand landmarker |
+| Physics | MuJoCo, compiled to WebAssembly |
+| Rendering | Three.js |
 
-Each pairing has a color, and that color shows up on your finger in the left box and on the robot part in the right box, so you can see which goes with which.
+No backend, no upload — recognition and physics both run in the browser tab.
 
-**At the bottom: two buttons.** One shuffles all the pairings into a fresh random set. The other pauses, so the robot freezes and stops reacting to your hand.
+## Source
 
-If your hand leaves the frame, the robot just stops where it is and waits.
+Public at [github.com/Alestainer/retargeting-controller](https://github.com/Alestainer/retargeting-controller). Issues and pull requests welcome, especially new embodiments and signal filters.
