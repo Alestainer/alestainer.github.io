@@ -35,4 +35,4 @@ No backend, no upload — recognition and physics both run in the browser tab.
 
 ## Source
 
-Public at [github.com/Alestainer/retargeting-controller](https://github.com/Alestainer/retargeting-controller). Issues and pull requests welcome, especially new embodiments and signal filters.
+Public at [github.com/Alestainer/retargeting-controller](https://github.com/Alestainer/retargeting-controller). Issues and pull requests welcome.
