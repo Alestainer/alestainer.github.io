@@ -1,0 +1,339 @@
+---
+// Follow-up to "Which map is random?"
+// Two point patterns: one homogeneous Poisson, one locally attracted.
+// Reader commits to a choice before anything is revealed.
+export interface Props {
+  seed?: number;
+  n?: number;
+  attraction?: number;
+  radius?: number;
+  steps?: number;
+}
+const { seed = 20260826, n = 120, attraction = 0.05, radius = 0.07, steps = 12 } = Astro.props;
+---
+
+<clustered-point-pattern-picker
+  data-seed={seed}
+  data-n={n}
+  data-attraction={attraction}
+  data-radius={radius}
+  data-steps={steps}
+>
+  <figure class="not-prose my-10">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+      <button type="button" data-panel="0" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
+        <canvas width="600" height="600" class="ppp-dots block w-full h-auto rounded"></canvas>
+        <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">A</span>
+      </button>
+      <button type="button" data-panel="1" class="ppp-panel group relative rounded-lg border-2 border-[var(--color-border)] bg-white p-2 transition hover:border-[var(--color-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
+        <canvas width="600" height="600" class="ppp-dots block w-full h-auto rounded"></canvas>
+        <span class="ppp-label mt-2 block text-center text-sm font-medium text-[var(--color-text-muted)]">B</span>
+      </button>
+    </div>
+
+    <p class="ppp-prompt mt-4 text-center text-base font-medium text-[var(--color-text)]">
+      One of these is truly random. Which one?
+    </p>
+
+    <div class="ppp-result mt-4 hidden rounded-lg bg-[var(--color-surface)] p-4 text-sm leading-relaxed text-[var(--color-text)]"></div>
+
+    <div class="ppp-analysis mt-6 hidden">
+      <p class="text-base font-semibold text-[var(--color-text)]">Models</p>
+      <canvas class="ppp-evalchart mt-3 block w-full h-auto" width="600" height="220"></canvas>
+      <p class="mt-2 text-xs text-[var(--color-text-muted)]">
+        Correct choices out of 20 mirrored trials. The same prompt was used for every model.
+      </p>
+
+      <details class="mt-6 rounded-lg border border-[var(--color-border)] p-4 text-sm leading-relaxed">
+        <summary class="cursor-pointer font-medium text-[var(--color-primary)]">Spoiler: what changed, and why models failed</summary>
+        <div class="mt-4 text-[var(--color-text)]">
+          <p>
+            One panel contains 120 independent uniform points. In the other, each point was moved toward
+            neighbours within radius 0.07 for 12 steps, at strength 0.05 per step. This creates more close
+            pairs, denser clumps, and larger gaps.
+          </p>
+          <p class="mt-3">
+            Divide each panel into equal cells and count the points per cell. Pure chance has variance approximately
+            equal to its mean. Local attraction raises that ratio by producing more empty and crowded cells.
+          </p>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:gap-4">
+            <div>
+              <canvas class="ppp-hist block w-full h-auto" data-side="0" data-h="150" width="600" height="300"></canvas>
+              <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p>
+            </div>
+            <div>
+              <canvas class="ppp-hist block w-full h-auto" data-side="1" data-h="150" width="600" height="300"></canvas>
+              <p class="ppp-vmr mt-1 text-center text-xs text-[var(--color-text-muted)]"></p>
+            </div>
+          </div>
+          <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4"></p>
+          <p class="mt-4">
+            In the <a class="text-[var(--color-primary)] underline" href="/blog/which-map-is-random">previous version</a>,
+            the non-random panel was made more evenly spaced. All six models scored 17&ndash;20/20. Here, the
+            non-random panel is made more clumped. The best model scored 13/20; Kimi and Qwen scored 0/20 and
+            reversed their answer on every mirrored pair.
+          </p>
+          <p class="mt-3">
+            The overfitting to the known example from Clarke is very likely the reason why the models not just fail
+            by doing random guesses but fail into the worse-than-random territory, they think that presence of
+            &ldquo;clumps&rdquo; is the sign of randomness, start looking for it and find more clumps in the clumped image.
+          </p>
+          <p class="mt-4 text-xs text-[var(--color-text-muted)]">
+            Count test: R. D. Clarke,
+            <a class="text-[var(--color-primary)] underline" href="https://garcialab.berkeley.edu/courses/papers/Clarke1946.pdf" target="_blank" rel="noopener">&ldquo;An Application of the Poisson Distribution&rdquo;</a>
+            (1946).
+          </p>
+          <p class="mt-4">
+            <a href="https://colab.research.google.com/github/Alestainer/statistics-intuitions/blob/main/notebooks/02-which-map-is-random-clumped.ipynb" target="_blank" rel="noopener" class="inline-flex">
+              <img src="/img/colab-badge.svg" alt="Open the reproduction notebook in Google Colab" width="117" height="20" loading="lazy" decoding="async" />
+            </a>
+          </p>
+          <p class="mt-2 text-xs text-[var(--color-text-muted)]">
+            The notebook contains the attraction generator, all 20 mirrored trials, the exact model prompt,
+            scoring code, and an opt-in OpenRouter rerun.
+          </p>
+        </div>
+      </details>
+    </div>
+
+    <div class="mt-4 flex items-center justify-center gap-3 text-xs text-[var(--color-text-muted)]">
+      <button type="button" class="ppp-reset rounded border border-[var(--color-border)] px-3 py-1 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]">New pair</button>
+      <span class="ppp-seed font-mono"></span>
+    </div>
+  </figure>
+</clustered-point-pattern-picker>
+
+<script>
+  import {
+    cellCounts, countHistogram, poissonExpected, varianceMeanRatio, drawGrid, drawHistogram,
+  } from './lib/pointstats';
+  import { drawModelScores } from './lib/evalchart';
+
+  const GRID_K = 10; // 100 cells; with n=120 that is lambda = 1.2, close to Clarke's 0.93
+
+  // Deterministic PRNG (mulberry32) — never Math.random, so every figure is reproducible
+  // and a reader can share "seed 20260817" and see exactly this pair.
+  function mulberry32(a: number) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  type Pt = [number, number];
+
+  // Homogeneous Poisson process on the unit square: n independent uniform points.
+  function poisson(rng: () => number, n: number): Pt[] {
+    const pts: Pt[] = [];
+    for (let i = 0; i < n; i++) pts.push([rng(), rng()]);
+    return pts;
+  }
+
+  function torusDelta(a: number, b: number) {
+    let d = b - a;
+    if (d > 0.5) d -= 1;
+    if (d < -0.5) d += 1;
+    return d;
+  }
+
+  // Begin with uniform points and repeatedly move each point toward nearby points.
+  // Wrapped boundaries avoid a visible edge signal.
+  function attract(start: Pt[], strength: number, radius: number, steps: number): Pt[] {
+    let pts = start.map(([x, y]) => [x, y] as Pt);
+    const radius2 = radius * radius;
+    for (let step = 0; step < steps; step++) {
+      const moves = pts.map(() => [0, 0, 0]);
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = torusDelta(pts[i][0], pts[j][0]);
+          const dy = torusDelta(pts[i][1], pts[j][1]);
+          const d2 = dx * dx + dy * dy;
+          if (d2 === 0 || d2 >= radius2) continue;
+          const weight = 1 - Math.sqrt(d2) / radius;
+          moves[i][0] += dx * weight;
+          moves[i][1] += dy * weight;
+          moves[i][2] += weight;
+          moves[j][0] -= dx * weight;
+          moves[j][1] -= dy * weight;
+          moves[j][2] += weight;
+        }
+      }
+      pts = pts.map(([x, y], i) => {
+        const weight = moves[i][2];
+        if (!weight) return [x, y];
+        return [
+          (x + strength * moves[i][0] / weight + 1) % 1,
+          (y + strength * moves[i][1] / weight + 1) % 1,
+        ];
+      });
+    }
+    return pts;
+  }
+
+  function draw(canvas: HTMLCanvasElement, pts: Pt[], showGrid = false) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 300;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssW * dpr);
+    const ctx = canvas.getContext('2d')!;
+    const S = canvas.width;
+    ctx.clearRect(0, 0, S, S);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, S, S);
+    const pad = S * 0.04;
+    const inner = S - pad * 2;
+    const rad = Math.max(2, S * 0.0075);
+    if (showGrid) drawGrid(ctx, S, pad, GRID_K, 'rgba(37, 99, 235, 0.28)');
+    ctx.fillStyle = '#111111';
+    for (const [x, y] of pts) {
+      ctx.beginPath();
+      ctx.arc(pad + x * inner, pad + y * inner, rad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  class ClusteredPointPatternPicker extends HTMLElement {
+    private seed!: number;
+    private n!: number;
+    private attraction!: number;
+    private radius!: number;
+    private steps!: number;
+    private randomIndex = 0;
+    private answered = false;
+
+    connectedCallback() {
+      this.seed = Number(this.dataset.seed) || 1;
+      this.n = Number(this.dataset.n) || 120;
+      this.attraction = Number(this.dataset.attraction) || 0.05;
+      this.radius = Number(this.dataset.radius) || 0.07;
+      this.steps = Number(this.dataset.steps) || 12;
+      this.render();
+      this.querySelectorAll<HTMLButtonElement>('.ppp-panel').forEach((btn) => {
+        btn.addEventListener('click', () => this.choose(Number(btn.dataset.panel)));
+      });
+      this.querySelector('.ppp-reset')!.addEventListener('click', () => {
+        this.seed = (this.seed * 1664525 + 1013904223) >>> 0;
+        this.answered = false;
+        this.render();
+      });
+      window.addEventListener('resize', () => this.paint());
+    }
+
+    private ptsA: Pt[] = [];
+    private ptsB: Pt[] = [];
+
+    private render() {
+      const rng = mulberry32(this.seed);
+      // Which side gets the true Poisson pattern is itself seeded.
+      this.randomIndex = rng() < 0.5 ? 0 : 1;
+      const p = poisson(mulberry32(this.seed ^ 0x9e3779b9), this.n);
+      const clusterStart = poisson(mulberry32(this.seed ^ 0x85ebca6b), this.n);
+      const h = attract(clusterStart, this.attraction, this.radius, this.steps);
+      this.ptsA = this.randomIndex === 0 ? p : h;
+      this.ptsB = this.randomIndex === 0 ? h : p;
+      this.paint();
+
+      this.showGrid = false;
+      (this.querySelector('.ppp-analysis') as HTMLElement).classList.add('hidden');
+      this.querySelector('details')?.removeAttribute('open');
+      const res = this.querySelector('.ppp-result') as HTMLElement;
+      res.classList.add('hidden');
+      res.innerHTML = '';
+      (this.querySelector('.ppp-prompt') as HTMLElement).textContent =
+        'One of these is truly random. Which one?';
+      this.querySelectorAll<HTMLElement>('.ppp-panel').forEach((b) => {
+        b.classList.remove('border-[var(--color-primary)]', 'opacity-50');
+        b.removeAttribute('disabled');
+      });
+      this.querySelectorAll<HTMLElement>('.ppp-label').forEach((el, i) => {
+        el.textContent = i === 0 ? 'A' : 'B';
+      });
+      (this.querySelector('.ppp-seed') as HTMLElement).textContent = `seed ${this.seed}`;
+    }
+
+    private showGrid = false;
+
+    private paint() {
+      const cs = this.querySelectorAll<HTMLCanvasElement>('canvas.ppp-dots');
+      draw(cs[0], this.ptsA, this.showGrid);
+      draw(cs[1], this.ptsB, this.showGrid);
+    }
+
+    /** Phase 3: Clarke's counts-per-cell test, run live on the pair just judged. */
+    private analyse() {
+      const nCells = GRID_K * GRID_K;
+      const lambda = this.n / nCells;
+      const maxBin = 4;
+      const expected = poissonExpected(lambda, nCells, maxBin);
+      const theory = 1 - 1 / nCells;
+
+      const hists = this.querySelectorAll<HTMLCanvasElement>('canvas.ppp-hist');
+      const vmrEls = this.querySelectorAll<HTMLElement>('.ppp-vmr');
+      const sides: Pt[][] = [this.ptsA, this.ptsB];
+      const vmrs: number[] = [];
+
+      sides.forEach((pts, idx) => {
+        const counts = cellCounts(pts, GRID_K);
+        const observed = countHistogram(counts, maxBin);
+        const v = varianceMeanRatio(counts);
+        vmrs.push(v);
+        const isRandom = idx === this.randomIndex;
+        drawHistogram(hists[idx], observed, expected, {
+          barColor: isRandom ? '#2563eb' : '#9ca3af',
+        });
+        vmrEls[idx].innerHTML =
+          `${idx === 0 ? 'A' : 'B'} &middot; variance / mean = <strong>${v.toFixed(2)}</strong>`;
+      });
+
+      const rIdx = this.randomIndex;
+      const oIdx = 1 - rIdx;
+      const rName = rIdx === 0 ? 'A' : 'B';
+      const oName = oIdx === 0 ? 'A' : 'B';
+      (this.querySelector('.ppp-verdict') as HTMLElement).innerHTML =
+        `Pure chance gives a variance-to-mean ratio of <strong>${theory.toFixed(2)}</strong> here (exactly 1 &minus; 1/${nCells}). ` +
+        `<strong>${rName}</strong>, generated independently, comes out at <strong>${vmrs[rIdx].toFixed(2)}</strong>. ` +
+        `<strong>${oName}</strong>, after attraction, comes out at <strong>${vmrs[oIdx].toFixed(2)}</strong>. ` +
+        `Attraction increases short-range pairs and raises the expected count variance across rounds.`;
+
+      const chart = this.querySelector('canvas.ppp-evalchart') as HTMLCanvasElement | null;
+      if (chart) {
+        drawModelScores(chart, [
+          { label: 'gemini-3.7-flash', correct: 13, n: 20 },
+          { label: 'claude-opus-5',    correct: 10, n: 20 },
+          { label: 'gpt-5.6-sol',      correct: 7,  n: 20 },
+          { label: 'claude-sonnet-5',  correct: 4,  n: 20 },
+          { label: 'kimi-k3',          correct: 0,  n: 20 },
+          { label: 'qwen3.8-max',       correct: 0,  n: 20 },
+        ]);
+      }
+
+      (this.querySelector('.ppp-analysis') as HTMLElement).classList.remove('hidden');
+    }
+
+    private choose(i: number) {
+      if (this.answered) return;
+      this.answered = true;
+      const correct = i === this.randomIndex;
+      this.querySelectorAll<HTMLElement>('.ppp-panel').forEach((b) => {
+        b.setAttribute('disabled', 'true');
+      });
+      (this.querySelector('.ppp-prompt') as HTMLElement).textContent = '';
+      const res = this.querySelector('.ppp-result') as HTMLElement;
+      res.classList.remove('hidden');
+      res.innerHTML = correct
+        ? '<strong>Correct.</strong> Here\'s how the top AI models did:'
+        : '<strong>Incorrect.</strong> Try another pair.';
+      this.analyse();
+      this.dispatchEvent(new CustomEvent('ppp:answer', {
+        bubbles: true,
+        detail: { correct, seed: this.seed },
+      }));
+    }
+  }
+
+  if (!customElements.get('clustered-point-pattern-picker')) {
+    customElements.define('clustered-point-pattern-picker', ClusteredPointPatternPicker);
+  }
+</script>
