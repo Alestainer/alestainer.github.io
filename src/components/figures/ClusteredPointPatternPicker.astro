@@ -43,6 +43,10 @@ const { seed = 20260826, n = 120, attraction = 0.05, radius = 0.07, steps = 12 }
       <p class="mt-2 text-xs text-[var(--color-text-muted)]">
         Correct choices out of 20 mirrored trials. The same prompt was used for every model.
       </p>
+      <p class="mt-2 text-xs text-[var(--color-text-muted)]">
+        <strong>Update, August 29, 2026:</strong> GLM 5.3 Flash was evaluated on the same 20 frozen
+        mirrored trials and scored 4/20.
+      </p>
 
       <details class="mt-6 rounded-lg border border-[var(--color-border)] p-4 text-sm leading-relaxed">
         <summary class="cursor-pointer font-medium text-[var(--color-primary)]">Spoiler: what changed, and why models failed</summary>
@@ -69,8 +73,9 @@ const { seed = 20260826, n = 120, attraction = 0.05, radius = 0.07, steps = 12 }
           <p class="ppp-verdict mt-3 rounded-lg bg-[var(--color-surface)] p-4"></p>
           <p class="mt-4">
             In the <a class="text-[var(--color-primary)] underline" href="/blog/which-map-is-random">previous version</a>,
-            the non-random panel was made more evenly spaced. All six models scored 17&ndash;20/20. Here, the
-            non-random panel is made more clumped. The best model scored 13/20; Kimi and Qwen scored 0/20 and
+            the non-random panel was made more evenly spaced. The original six models scored 17&ndash;20/20;
+            GLM 5.3 Flash scored 16/20. Here, the non-random panel is made more clumped. The best model scored
+            13/20; Kimi and Qwen scored 0/20 and
             reversed their answer on every mirrored pair.
           </p>
           <p class="mt-3">
@@ -304,6 +309,7 @@ const { seed = 20260826, n = 120, attraction = 0.05, radius = 0.07, steps = 12 }
           { label: 'claude-opus-5',    correct: 10, n: 20 },
           { label: 'gpt-5.6-sol',      correct: 7,  n: 20 },
           { label: 'claude-sonnet-5',  correct: 4,  n: 20 },
+          { label: 'glm-5.3-flash',     correct: 4,  n: 20 },
           { label: 'kimi-k3',          correct: 0,  n: 20 },
           { label: 'qwen3.8-max',       correct: 0,  n: 20 },
         ]);

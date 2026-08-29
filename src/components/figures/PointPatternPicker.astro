@@ -127,6 +127,10 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
           I generated 20 pairs and asked AIs from top labs to classify, here are the results:
         </p>
         <canvas class="ppp-evalchart mt-3 block w-full h-auto" width="600" height="220"></canvas>
+        <p class="mt-3 text-xs text-[var(--color-text-muted)]">
+          <strong>Update, August 29, 2026:</strong> GLM 5.3 Flash was evaluated on the same 20 frozen
+          mirrored trials and scored 16/20.
+        </p>
         <p class="mt-4 rounded-lg bg-[var(--color-surface)] p-4">
           Anything but 100% here I would count as a failure. That is what understanding a concept
           means rather than guessing at it: once you have it, you apply it consistently. Every human
@@ -335,6 +339,7 @@ const { seed = 20260817, n = 120, minSep = 0.028 } = Astro.props;
           { label: 'claude-opus-5',    correct: 18, n: 20 },
           { label: 'kimi-k3',          correct: 18, n: 20 },
           { label: 'claude-sonnet-5',  correct: 17, n: 20 },
+          { label: 'glm-5.3-flash',     correct: 16, n: 20 },
         ]);
       }
 
