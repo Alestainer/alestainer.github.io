@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support-boundary benchmark</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #111; background: #fff; }
+    main { width: min(820px, calc(100% - 28px)); margin: 0 auto; padding: 32px 0 64px; }
+    .head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: clamp(1.55rem, 5vw, 2.25rem); letter-spacing: -0.035em; }
+    .progress { color: #666; font: 700 0.8rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+    .question { margin: 0 0 14px; color: #555; line-height: 1.45; }
+    .plot { border: 1px solid #ddd; background: #fff; }
+    .plot img { display: block; width: 100%; height: auto; }
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .option { display: grid; grid-template-columns: 32px 1fr; align-items: center; min-height: 66px; padding: 12px 14px; border: 1px solid #ddd; border-radius: 5px; background: #fff; color: #111; text-align: left; cursor: pointer; }
+    .option:hover:not(:disabled) { border-color: #2457d6; }
+    .option:focus-visible, .download:focus-visible, .restart:focus-visible { outline: 3px solid rgb(36 87 214 / 25%); outline-offset: 2px; }
+    .option:disabled { cursor: default; opacity: 0.55; }
+    .letter { color: #666; font: 800 0.82rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .formula { font: 500 1.1rem/1.3 Georgia, "Times New Roman", serif; }
+    .summary { display: none; padding-top: 42px; }
+    .score { margin: 12px 0 26px; font-size: clamp(3.5rem, 14vw, 7rem); font-weight: 800; letter-spacing: -0.07em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .download, .restart { min-height: 42px; padding: 0 15px; border: 1px solid #111; border-radius: 5px; font-weight: 750; cursor: pointer; }
+    .download { background: #111; color: #fff; }
+    .restart { background: #fff; color: #111; }
+    .status { min-height: 1.4em; margin: 14px 0 0; color: #666; font-size: 0.85rem; }
+    @media (max-width: 620px) {
+      main { padding-top: 24px; }
+      .head { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="round">
+      <div class="head">
+        <h1>Pick the boundary function.</h1>
+        <span class="progress" id="progress"></span>
+      </div>
+      <p class="question">Points were sampled uniformly from one side of a hidden boundary in the fixed square. Pick the separating formula.</p>
+      <div class="plot"><img id="stimulus" alt="Point cloud sampled from one side of a hidden function boundary"></div>
+      <div class="options" id="options"></div>
+      <p class="status" id="status" aria-live="polite"></p>
+    </section>
+
+    <section class="summary" id="summary">
+      <h1>Finished.</h1>
+      <div class="score" id="score"></div>
+      <div class="actions">
+        <button class="download" id="download" type="button">Download results</button>
+        <button class="restart" id="restart" type="button">Start over</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    const manifest = await fetch('./eval/benchmark.json').then(response => {
+      if (!response.ok) throw new Error(`Unable to load benchmark: ${response.status}`);
+      return response.json();
+    });
+    const params = new URLSearchParams(location.search);
+    const participant = params.get('participant') || 'human';
+    const storageKey = `${manifest.benchmarkId}:human:${participant}`;
+    const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+    const state = stored?.benchmarkId === manifest.benchmarkId
+      ? stored
+      : { benchmarkId: manifest.benchmarkId, participant, startedAt: new Date().toISOString(), responses: [] };
+
+    const roundNode = document.getElementById('round');
+    const summaryNode = document.getElementById('summary');
+    const progressNode = document.getElementById('progress');
+    const stimulusNode = document.getElementById('stimulus');
+    const optionsNode = document.getElementById('options');
+    const statusNode = document.getElementById('status');
+    let shownAt = performance.now();
+    let locked = false;
+
+    function save() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function showRound() {
+      const index = state.responses.length;
+      if (index >= manifest.episodes.length) return showSummary();
+      locked = false;
+      const episode = manifest.episodes[index];
+      progressNode.textContent = `${index + 1} / ${manifest.episodes.length}`;
+      statusNode.textContent = '';
+      stimulusNode.src = `./eval/${episode.image}`;
+      optionsNode.replaceChildren();
+      for (const option of episode.options) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'option';
+        button.innerHTML = `<span class="letter">${option.label}</span><span class="formula">${option.formula}</span>`;
+        button.setAttribute('aria-label', `Option ${option.label}: ${option.formula}`);
+        button.addEventListener('click', () => answer(episode, option.label));
+        optionsNode.append(button);
+      }
+      stimulusNode.onload = () => { shownAt = performance.now(); };
+    }
+
+    function answer(episode, label) {
+      if (locked) return;
+      locked = true;
+      const selected = `OPTION ${label}`;
+      for (const button of optionsNode.querySelectorAll('button')) button.disabled = true;
+      state.responses.push({
+        episodeId: episode.id,
+        seed: episode.seed,
+        selected,
+        expected: episode.answer,
+        correct: selected === episode.answer,
+        responseTimeMs: Math.round(performance.now() - shownAt),
+        answeredAt: new Date().toISOString(),
+      });
+      save();
+      statusNode.textContent = 'Saved.';
+      window.setTimeout(showRound, 180);
+    }
+
+    function results() {
+      return {
+        schemaVersion: 1,
+        benchmarkId: manifest.benchmarkId,
+        participant,
+        startedAt: state.startedAt,
+        finishedAt: state.finishedAt,
+        correct: state.responses.filter(response => response.correct).length,
+        total: manifest.episodes.length,
+        responses: state.responses,
+      };
+    }
+
+    function showSummary() {
+      state.finishedAt ||= new Date().toISOString();
+      save();
+      roundNode.style.display = 'none';
+      summaryNode.style.display = 'block';
+      document.getElementById('score').textContent = `${state.responses.filter(response => response.correct).length} / ${manifest.episodes.length}`;
+    }
+
+    document.getElementById('download').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(results(), null, 2) + '\n'], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `support-boundary-${participant}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    document.getElementById('restart').addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      location.reload();
+    });
+
+    showRound();
+  </script>
+</body>
+</html>
