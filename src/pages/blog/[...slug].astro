@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubscribeToPosts from '../../components/SubscribeToPosts.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -94,6 +95,8 @@ const breadcrumbSchema = {
     ">
       <Content />
     </div>
+
+    <SubscribeToPosts />
 
     <footer class="mt-12 pt-8 border-t border-border">
       {post.data.syndication.length > 0 && (
